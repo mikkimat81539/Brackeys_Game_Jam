@@ -5,36 +5,41 @@
 
 using namespace std;
 
+# define print(x) cout << x << endl;
+
 int main() {
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroid"); // SCREEN
 
 	Player player; // Define player
 	player.position = SCREEN_CENTER;
-	player.velocity =  {2, 2};
+	player.velocity =  {500, 500};
 
-	SetTargetFPS(FPS); // FPS
+	SetTargetFPS(FPS);
 
 	// GAME LOOP
 	while(!WindowShouldClose()) {
+		// DELTA TIME
+		float dt = GetFrameTime();
+
 
 		//PLAYER MOVEMENT CONDITIONS
 		if (IsKeyDown(KEY_LEFT)){
-			player_move_left(player);
+			player_move_left(player, dt);
 
 		}
 
 		if (IsKeyDown(KEY_RIGHT)){
-			player_move_right(player);
+			player_move_right(player, dt);
 
 		}
 
 		if (IsKeyDown(KEY_UP)){
-			player_move_up(player);
+			player_move_up(player, dt);
 
 		}
 
 		if (IsKeyDown(KEY_DOWN)){
-			player_move_down(player);
+			player_move_down(player, dt);
 
 		}
 
@@ -45,8 +50,7 @@ int main() {
 
 		// DRAWING PLAYER
 		DrawPoly(player.position, 3, 20, 0, WHITE);
-
-
+		
 		EndDrawing();	
 
 	}
@@ -57,18 +61,19 @@ int main() {
 }
 
 // PLAYER MOVEMENT FUNCTIONS
-void player_move_left(Player &player){
-	player.position.x -= player.velocity.x;
+void player_move_left(Player &player, float dt){
+	player.position.x -= player.velocity.x * dt;
+
 }
 
-void player_move_right(Player &player){
-	player.position.x += player.velocity.x;
+void player_move_right(Player &player, float dt){
+	player.position.x += player.velocity.x * dt;
 }
 
-void player_move_up(Player &player){
-	player.position.y -= player.velocity.y;
+void player_move_up(Player &player, float dt){
+	player.position.y -= player.velocity.y * dt;
 }
 
-void player_move_down(Player &player){
-	player.position.y += player.velocity.y;
+void player_move_down(Player &player, float dt){
+	player.position.y += player.velocity.y * dt;
 }
