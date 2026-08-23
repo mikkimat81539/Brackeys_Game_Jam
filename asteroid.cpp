@@ -44,6 +44,23 @@ int main() {
 		}
 
 
+		// PLAYER OUT OF BOUNDS
+		if (player.position.x > SCREEN_WIDTH){
+			player.position.x = 0;
+		}
+
+		if (player.position.x < 0){
+			player.position.x = SCREEN_WIDTH;
+		}
+
+		if (player.position.y > SCREEN_HEIGHT){
+			player.position.y = 0;
+		}
+
+		if (player.position.y < 0){
+			player.position.y = SCREEN_HEIGHT;
+		}
+
 		BeginDrawing();
 		HideCursor();
 		ClearBackground(BLACK);
