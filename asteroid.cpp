@@ -18,18 +18,31 @@ int main() {
 	// GAME LOOP
 	while(!WindowShouldClose()) {
 		if (IsKeyDown(KEY_LEFT)){
-			player_movement(player);
+			player_move_left(player);
 
 		}
+
+		if (IsKeyDown(KEY_RIGHT)){
+			player_move_right(player);
+
+		}
+
+		if (IsKeyDown(KEY_UP)){
+			player_move_up(player);
+
+		}
+
+		if (IsKeyDown(KEY_DOWN)){
+			player_move_down(player);
+
+		}
+
 
 		BeginDrawing();
 		HideCursor();
 		ClearBackground(BLACK);
 
 		DrawPoly(player.position, 3, 20, 0, WHITE);
-
-
-		// DrawPoly(player.position, 3, 20, 0, WHITE);
 
 
 		EndDrawing();	
@@ -41,6 +54,18 @@ int main() {
 	return 0;
 }
 
-void player_movement(Player &player){
+void player_move_left(Player &player){
 	player.position.x -= player.velocity.x;
+}
+
+void player_move_right(Player &player){
+	player.position.x += player.velocity.x;
+}
+
+void player_move_up(Player &player){
+	player.position.y -= player.velocity.y;
+}
+
+void player_move_down(Player &player){
+	player.position.y += player.velocity.y;
 }
