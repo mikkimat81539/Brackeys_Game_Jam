@@ -6,17 +6,18 @@
 using namespace std;
 
 int main() {
-	// SCREEN
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroid");
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroid"); // SCREEN
 
-	Player player;
+	Player player; // Define player
 	player.position = SCREEN_CENTER;
 	player.velocity =  {2, 2};
 
-	SetTargetFPS(FPS);
+	SetTargetFPS(FPS); // FPS
 
 	// GAME LOOP
 	while(!WindowShouldClose()) {
+
+		//PLAYER MOVEMENT CONDITIONS
 		if (IsKeyDown(KEY_LEFT)){
 			player_move_left(player);
 
@@ -42,6 +43,7 @@ int main() {
 		HideCursor();
 		ClearBackground(BLACK);
 
+		// DRAWING PLAYER
 		DrawPoly(player.position, 3, 20, 0, WHITE);
 
 
@@ -54,6 +56,7 @@ int main() {
 	return 0;
 }
 
+// PLAYER MOVEMENT FUNCTIONS
 void player_move_left(Player &player){
 	player.position.x -= player.velocity.x;
 }
