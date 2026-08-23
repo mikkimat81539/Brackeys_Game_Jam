@@ -1,1 +1,2 @@
-# This file contains the gameplay for Brackeys 2026.2 Game Jam
+# Asteroid Game
+- This branch includes the gameplay for asteroid. The game I am making for the game jam is going to have similar mechanics to asteroid.
