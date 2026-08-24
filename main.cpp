@@ -40,6 +40,12 @@ int main(){
 	fence.width = 400;
 	fence.height = 400;
 	
+	// Create Fence
+	SQUARE player;
+	player.x = 385;
+	player.y = 319;
+	player.width = 20;
+	player.height = 20;
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -49,6 +55,12 @@ int main(){
 		// DELTA TIME
 		float dt = GetFrameTime();
 
+		// MOUSE
+//		Vector2 mouse = GetMousePosition();
+//		if (IsMouseButtonDown(0)){
+//			cout << mouse.x << "," << mouse.y << endl;
+//		}
+
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
@@ -56,7 +68,7 @@ int main(){
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // left roof
-		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
+		DrawRectangle(player.x, player.y, player.width, player.height, RED); // player
 
 
 
