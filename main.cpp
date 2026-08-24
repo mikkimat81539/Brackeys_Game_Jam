@@ -49,11 +49,27 @@ int main(){
 	player.position = {385, 319};
 	player.velocity = {300, 300};
 
+	// Create Hose
+	HOSE hose;
+	hose.start_pos = {332, 280};
+	hose.end_pos = player.position;
+	hose.thickness = 3;
+	Color hose_color = {43, 217, 182, 255};
+
 	// FPS
 	SetTargetFPS(FPS);
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
+
+	// MOUSE POSITION
+	Vector2 mouse = GetMousePosition();	
+
+	if (IsMouseButtonPressed(0)){
+		cout << mouse.x << "," << mouse.y << endl;
+
+	}
+
 		// DELTA TIME
 		float dt = GetFrameTime();
 
@@ -75,6 +91,8 @@ int main(){
 			player_move_down(player, dt, walls);
 		}
 
+		hose.end_pos = player.position; // Have hose follow player
+
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -83,9 +101,10 @@ int main(){
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, GREEN); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
+		DrawLineBezier(hose.start_pos, hose.end_pos, hose.thickness, hose_color); // garden hose
 		DrawPoly(player.position, 4, 15, 45, BLACK);
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
-
+		
 
 		EndDrawing();
 	}

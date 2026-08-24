@@ -16,4 +16,9 @@ struct ROOF {
 	float rotation;
 };
 
+struct HOSE {
+	Vector2 start_pos;
+	Vector2 end_pos;
+	float thickness;
+};
 # endif
