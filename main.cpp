@@ -33,6 +33,13 @@ int main(){
 	roof1.size = 60;
 	roof1.rotation = 270.0f;
 
+	// Create Fence
+	SQUARE fence;
+	fence.x = 170;
+	fence.y = 30;
+	fence.width = 400;
+	fence.height = 400;
+	
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -49,6 +56,8 @@ int main(){
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // left roof
+		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
+
 
 
 		EndDrawing();
