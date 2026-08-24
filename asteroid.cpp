@@ -12,7 +12,8 @@ int main() {
 
 	Player player; // Define player
 	player.position = SCREEN_CENTER;
-	player.velocity =  {500, 500};
+	player.velocity =  {400, 400};
+	player.rotation = 0;
 
 	SetTargetFPS(FPS);
 
@@ -25,21 +26,25 @@ int main() {
 		//PLAYER MOVEMENT CONDITIONS
 		if (IsKeyDown(KEY_LEFT)){
 			player_move_left(player, dt);
+			player.rotation = 180;
 
 		}
 
 		if (IsKeyDown(KEY_RIGHT)){
 			player_move_right(player, dt);
+			player.rotation = 0;
 
 		}
 
 		if (IsKeyDown(KEY_UP)){
 			player_move_up(player, dt);
+			player.rotation = 270;
 
 		}
 
 		if (IsKeyDown(KEY_DOWN)){
 			player_move_down(player, dt);
+			player.rotation = 90;
 
 		}
 
@@ -66,7 +71,7 @@ int main() {
 		ClearBackground(BLACK);
 
 		// DRAWING PLAYER
-		DrawPoly(player.position, 3, 20, 0, WHITE);
+		DrawPoly(player.position, 3, 20, player.rotation, WHITE);
 		
 		EndDrawing();	
 
