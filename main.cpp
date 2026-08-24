@@ -13,11 +13,18 @@ int main(){
 
 	// Create Lawn
 	SQUARE lawn;
-	lawn.x = SCREEN_CENTER.x - 300/2;
-	lawn.y = SCREEN_CENTER.y - 300/2;
+	lawn.x = SCREEN_CENTER.x - 350/2; // offset so it is centered
+	lawn.y = SCREEN_CENTER.y - 450/2;
 	lawn.width = 300;
 	lawn.height = 300;
-		
+
+	// Create Walls
+	SQUARE walls;
+	walls.x = lawn.width + 32;
+	walls.y = 200;
+	walls.width = 100;
+	walls.height = 100;
+	
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -31,7 +38,9 @@ int main(){
 		ClearBackground(RAYWHITE);
 
 		// DRAW
-		DrawRectangle(lawn.x, lawn.y, lawn.width, lawn.height, GREEN);
+		 DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
+		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
+
 
 		EndDrawing();
 	}
