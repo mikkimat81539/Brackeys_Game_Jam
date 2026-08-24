@@ -13,7 +13,7 @@ struct ROOF {
 	Vector2 position;
 	int sides;
 	int size;
-	float rotation
+	float rotation;
 };
 
 # endif
