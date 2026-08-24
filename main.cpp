@@ -26,6 +26,14 @@ int main(){
 	walls.height = 100;
 	
 
+	// Create Roof
+	ROOF roof1;
+	roof1.position = {float(walls.x) + 50, 170};	
+	roof1.sides = 3;
+	roof1.size = 60;
+	roof1.rotation = 270.0f;
+
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -38,8 +46,9 @@ int main(){
 		ClearBackground(RAYWHITE);
 
 		// DRAW
-		 DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
+		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
+		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // left roof
 
 
 		EndDrawing();
