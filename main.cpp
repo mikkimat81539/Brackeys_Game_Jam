@@ -2,6 +2,8 @@
 # include "raylib.h"
 # include "constants.h"
 # include "property.h"
+# include "player.h"
+
 
 using namespace std;
 
@@ -40,12 +42,10 @@ int main(){
 	fence.width = 400;
 	fence.height = 400;
 	
-	// Create Fence
-	SQUARE player;
-	player.x = 385;
-	player.y = 319;
-	player.width = 20;
-	player.height = 20;
+	// Create Player
+	Player player;
+	player.position = {385, 319};
+	player.velocity = {300, 300};
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -55,11 +55,22 @@ int main(){
 		// DELTA TIME
 		float dt = GetFrameTime();
 
-		// MOUSE
-//		Vector2 mouse = GetMousePosition();
-//		if (IsMouseButtonDown(0)){
-//			cout << mouse.x << "," << mouse.y << endl;
-//		}
+		//PLAYER MOVEMENT CONDITIONS
+		if (IsKeyDown(KEY_LEFT)){
+			player_move_left(player, dt);
+		}
+
+		if (IsKeyDown(KEY_RIGHT)){
+			player_move_right(player, dt);
+		}
+
+		if (IsKeyDown(KEY_UP)){
+			player_move_up(player, dt);
+		}
+
+		if (IsKeyDown(KEY_DOWN)){
+			player_move_down(player, dt);
+		}
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -68,7 +79,8 @@ int main(){
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // left roof
-		DrawRectangle(player.x, player.y, player.width, player.height, RED); // player
+		// DrawRectangle(player.x, player.y, player.width, player.height, RED); // player
+		DrawPoly(player.position, 4, 15, 45, BLACK);
 
 
 
@@ -78,4 +90,22 @@ int main(){
 	CloseWindow();
 
 	return 0;
+}
+
+// PLAYER MOVEMENT FUNCTIONS
+void player_move_left(Player &player, float dt){
+	player.position.x -= player.velocity.x * dt;
+
+}
+
+void player_move_right(Player &player, float dt){
+	player.position.x += player.velocity.x * dt;
+}
+
+void player_move_up(Player &player, float dt){
+	player.position.y -= player.velocity.y * dt;
+}
+
+void player_move_down(Player &player, float dt){
+	player.position.y += player.velocity.y * dt;
 }
