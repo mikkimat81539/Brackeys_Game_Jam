@@ -1,4 +1,5 @@
 # include <iostream>
+# include <cmath>
 # include "raylib.h"
 # include "constants.h"
 # include "property.h"
@@ -26,7 +27,8 @@ int main(){
 	walls.y = 200;
 	walls.width = 100;
 	walls.height = 100;
-	
+
+	float wall_area = walls.width * walls.height;	
 
 	// Create Roof
 	ROOF roof1;
@@ -55,33 +57,34 @@ int main(){
 		// DELTA TIME
 		float dt = GetFrameTime();
 
+
 		//PLAYER MOVEMENT CONDITIONS
 		if (IsKeyDown(KEY_LEFT)){
-			player_move_left(player, dt);
+			player_move_left(player, dt, walls);
 		}
 
 		if (IsKeyDown(KEY_RIGHT)){
-			player_move_right(player, dt);
+			player_move_right(player, dt, walls);
 		}
 
 		if (IsKeyDown(KEY_UP)){
-			player_move_up(player, dt);
+			player_move_up(player, dt, walls);
 		}
 
 		if (IsKeyDown(KEY_DOWN)){
-			player_move_down(player, dt);
+			player_move_down(player, dt, walls);
 		}
+
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
 		// DRAW
-		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, BLACK); // lawn
+		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, GREEN); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
-		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // left roof
-		// DrawRectangle(player.x, player.y, player.width, player.height, RED); // player
+		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // roof
+		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
 		DrawPoly(player.position, 4, 15, 45, BLACK);
-
 
 
 		EndDrawing();
@@ -93,19 +96,35 @@ int main(){
 }
 
 // PLAYER MOVEMENT FUNCTIONS
-void player_move_left(Player &player, float dt){
+void player_move_left(Player &player, float dt, SQUARE walls){
 	player.position.x -= player.velocity.x * dt;
 
+	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
+		player.position.x += player.velocity.x * dt;
+	}
+
 }
 
-void player_move_right(Player &player, float dt){
+void player_move_right(Player &player, float dt, SQUARE walls){
 	player.position.x += player.velocity.x * dt;
+
+	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
+		player.position.x -= player.velocity.x * dt;
+	}
 }
 
-void player_move_up(Player &player, float dt){
+void player_move_up(Player &player, float dt, SQUARE walls){
 	player.position.y -= player.velocity.y * dt;
+
+	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width), float(walls.height)+8})) {
+		player.position.y += player.velocity.y * dt;
+	}
 }
 
-void player_move_down(Player &player, float dt){
+void player_move_down(Player &player, float dt, SQUARE walls){
 	player.position.y += player.velocity.y * dt;
+
+	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y)-12, float(walls.width), float(walls.height)})) {
+		player.position.y -= player.velocity.y * dt;
+	}
 }
