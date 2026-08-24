@@ -1,8 +1,8 @@
-build asteroid.cpp:
-	g++ -g asteroid.cpp $$(pkg-config --libs --cflags raylib) -o asteroid
+build main.cpp:
+	g++ -g main.cpp $$(pkg-config --libs --cflags raylib) -o main
 
 debug:
-	lldb asteroid
+	lldb main
 
 clean:
-	rm -f asteroid
+	rm -f main

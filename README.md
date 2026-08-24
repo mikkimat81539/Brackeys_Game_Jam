@@ -1,2 +1,2 @@
-# Asteroid Game
-- This branch includes the gameplay for asteroid. The game I am making for the game jam is going to have similar mechanics to asteroid.
+# Get Off My Lawn
+- This branch includes the prototype to the game Get Off My Lawn
