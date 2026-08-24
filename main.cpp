@@ -87,7 +87,6 @@ int main(){
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
 
 
-
 		EndDrawing();
 	}
 	
@@ -103,12 +102,20 @@ void player_move_left(Player &player, float dt, SQUARE walls){
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
 		player.position.x += player.velocity.x * dt;
 	}
+
+	if (player.position.x <= 235){
+		player.position.x += player.velocity.x * dt;
+	}
 }
 
 void player_move_right(Player &player, float dt, SQUARE walls){
 	player.position.x += player.velocity.x * dt;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
+		player.position.x -= player.velocity.x * dt;
+	}
+
+	if (player.position.x >= 515){
 		player.position.x -= player.velocity.x * dt;
 	}
 
@@ -120,12 +127,20 @@ void player_move_up(Player &player, float dt, SQUARE walls){
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width), float(walls.height)+8})) {
 		player.position.y += player.velocity.y * dt;
 	}
+
+	if (player.position.y <= 85){
+		player.position.y += player.velocity.y * dt;
+	}
 }
 
 void player_move_down(Player &player, float dt, SQUARE walls){
 	player.position.y += player.velocity.y * dt;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y)-12, float(walls.width), float(walls.height)})) {
+		player.position.y -= player.velocity.y * dt;
+	}
+
+	if (player.position.y >= 365){
 		player.position.y -= player.velocity.y * dt;
 	}
 }
