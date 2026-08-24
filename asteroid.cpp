@@ -2,6 +2,10 @@
 # include "raylib.h"
 # include "constants.h"
 # include "player.h"
+# include "asteroid.h"
+# include <ctime>
+# include <cstdlib>
+# include <random>
 
 using namespace std;
 
@@ -10,10 +14,28 @@ using namespace std;
 int main() {
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroid"); // SCREEN
 
+	// PLAYER
 	Player player; // Define player
 	player.position = SCREEN_CENTER;
 	player.velocity =  {400, 400};
 	player.rotation = 0;
+
+	// ASTEROID
+	srand(time(0));
+
+	float rand_y = rand() % 602;
+
+	mt19937 generator(random_device{}());
+
+	uniform_int_distribution<int>distribution(4, 7);
+	int sides = distribution(generator);
+
+	print(sides);
+
+	Asteroid asteroids;
+	asteroids.position = {100, rand_y};
+	asteroids.velocity = {100, 100};
+	asteroids.sides = float(sides);
 
 	SetTargetFPS(FPS);
 
@@ -72,7 +94,10 @@ int main() {
 
 		// DRAWING PLAYER
 		DrawPoly(player.position, 3, 20, player.rotation, WHITE);
-		
+	
+		// DRAWING ASTEROIDS
+		DrawPolyLines(asteroids.position, asteroids.sides, 20, 0, WHITE);
+	
 		EndDrawing();	
 
 	}
