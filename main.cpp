@@ -31,11 +31,11 @@ int main(){
 	float wall_area = walls.width * walls.height;	
 
 	// Create Roof
-	ROOF roof1;
-	roof1.position = {float(walls.x) + 50, 170};	
-	roof1.sides = 3;
-	roof1.size = 60;
-	roof1.rotation = 270.0f;
+	ROOF roof;
+	roof.position = {float(walls.x) + 50, 170};	
+	roof.sides = 3;
+	roof.size = 60;
+	roof.rotation = 270.0f;
 
 	// Create Fence
 	SQUARE fence;
@@ -82,9 +82,10 @@ int main(){
 		// DRAW
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, GREEN); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
-		DrawPolyLines(roof1.position, roof1.sides, roof1.size, roof1.rotation, BLACK); // roof
 		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
 		DrawPoly(player.position, 4, 15, 45, BLACK);
+		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
+
 
 
 		EndDrawing();
@@ -102,7 +103,6 @@ void player_move_left(Player &player, float dt, SQUARE walls){
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
 		player.position.x += player.velocity.x * dt;
 	}
-
 }
 
 void player_move_right(Player &player, float dt, SQUARE walls){
@@ -111,6 +111,7 @@ void player_move_right(Player &player, float dt, SQUARE walls){
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
 		player.position.x -= player.velocity.x * dt;
 	}
+
 }
 
 void player_move_up(Player &player, float dt, SQUARE walls){
