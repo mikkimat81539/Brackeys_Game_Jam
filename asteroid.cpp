@@ -30,12 +30,18 @@ int main() {
 	uniform_int_distribution<int>distribution(4, 7);
 	int sides = distribution(generator);
 
-	print(sides);
+	Asteroid asteroid1;
+	asteroid1.position = {-1, rand_y};
+	asteroid1.sides = float(sides);
 
-	Asteroid asteroids;
-	asteroids.position = {100, rand_y};
-	asteroids.velocity = {100, 100};
-	asteroids.sides = float(sides);
+	float rand_y2 = rand() % 601;
+
+	uniform_int_distribution<int>distribution2(4, 7);
+	int sides2 = distribution2(generator);
+
+	Asteroid asteroid2;
+	asteroid2.position = {SCREEN_WIDTH, rand_y2};
+	asteroid2.sides = float(sides2);
 
 	SetTargetFPS(FPS);
 
@@ -96,7 +102,9 @@ int main() {
 		DrawPoly(player.position, 3, 20, player.rotation, WHITE);
 	
 		// DRAWING ASTEROIDS
-		DrawPolyLines(asteroids.position, asteroids.sides, 20, 0, WHITE);
+		
+		DrawPolyLines(asteroid1.position, asteroid1.sides, 20, 0, WHITE);
+		DrawPolyLines(asteroid2.position, asteroid2.sides, 20, 0, WHITE);
 	
 		EndDrawing();	
 
