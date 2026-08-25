@@ -56,6 +56,18 @@ int main(){
 	hose.thickness = 3;
 	Color hose_color = {43, 217, 182, 255};
 
+	// PROJECTILES
+	Projectiles projectiles;
+	projectiles.radius = 5.0f;
+	projectiles.velocity = 30.0f;
+	projectiles.active = false;
+
+	projectiles.right = false;
+	projectiles.left = false;
+	projectiles.up = false;
+	projectiles.down = false;
+
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -76,36 +88,77 @@ int main(){
 
 		//PLAYER MOVEMENT CONDITIONS
 		if (IsKeyDown(KEY_LEFT)){
-			player_move_left(player, dt, walls);
+			player_move_left(player, dt, walls, projectiles);
 		}
 
 		if (IsKeyDown(KEY_RIGHT)){
-			player_move_right(player, dt, walls);
+			player_move_right(player, dt, walls, projectiles);
 		}
 
 		if (IsKeyDown(KEY_UP)){
-			player_move_up(player, dt, walls);
+			player_move_up(player, dt, walls, projectiles);
 		}
 
 		if (IsKeyDown(KEY_DOWN)){
-			player_move_down(player, dt, walls);
+			player_move_down(player, dt, walls, projectiles);
 		}
 
 		hose.end_pos = player.position; // Have hose follow player
 
 
+		// Projectile movement
+//		if (IsKeyPressed(KEY_SPACE)) {
+//			projectiles.x = player.position.x;
+//			projectiles.y = player.position.y;
+//			projectiles.active = true;
+//		}
+//
+//		if (projectiles.active) {
+//			projectiles.x += projectiles.velocity * dt;
+//		
+//			if (projectiles.right){
+//				projectiles.x += projectiles.velocity;
+//			}
+//
+//			if (projectiles.left){
+//				projectiles.x -= projectiles.velocity;
+//			}
+//
+//			if (projectiles.down){
+//				projectiles.y += projectiles.velocity;
+//			}
+//
+//			if (projectiles.up){
+//				projectiles.y -= projectiles.velocity;
+//			}
+//		}
+//		
+
+
+		// Projectile movement
+		if (IsKeyPressed(KEY_SPACE)) {
+			projectiles.x = player.position.x;
+			projectiles.y = player.position.y;
+			projectiles.active = true;
+		}
+
+		if (projectiles.active) {
+			projectiles.x += projectiles.velocity * dt;
+		}
+
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
+
 
 		// DRAW
 		DrawRectangleLines(lawn.x, lawn.y, lawn.width, lawn.height, GREEN); // lawn
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
 		DrawLineBezier(hose.start_pos, hose.end_pos, hose.thickness, hose_color); // garden hose
+		DrawCircleLines(projectiles.x, projectiles.y, projectiles.radius, BLACK); // projectiles
 		DrawPoly(player.position, 4, 15, 45, BLACK);
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
 		
-
 		EndDrawing();
 	}
 	
@@ -115,8 +168,10 @@ int main(){
 }
 
 // PLAYER MOVEMENT FUNCTIONS
-void player_move_left(Player &player, float dt, SQUARE walls){
+void player_move_left(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.x -= player.velocity.x * dt;
+	projectiles.left = true;
+
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
 		player.position.x += player.velocity.x * dt;
@@ -127,8 +182,9 @@ void player_move_left(Player &player, float dt, SQUARE walls){
 	}
 }
 
-void player_move_right(Player &player, float dt, SQUARE walls){
+void player_move_right(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.x += player.velocity.x * dt;
+	projectiles.right = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
 		player.position.x -= player.velocity.x * dt;
@@ -140,8 +196,9 @@ void player_move_right(Player &player, float dt, SQUARE walls){
 
 }
 
-void player_move_up(Player &player, float dt, SQUARE walls){
+void player_move_up(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.y -= player.velocity.y * dt;
+	projectiles.up = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width), float(walls.height)+8})) {
 		player.position.y += player.velocity.y * dt;
@@ -150,10 +207,12 @@ void player_move_up(Player &player, float dt, SQUARE walls){
 	if (player.position.y <= 85){
 		player.position.y += player.velocity.y * dt;
 	}
+
 }
 
-void player_move_down(Player &player, float dt, SQUARE walls){
+void player_move_down(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.y += player.velocity.y * dt;
+	projectiles.down = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y)-12, float(walls.width), float(walls.height)})) {
 		player.position.y -= player.velocity.y * dt;
