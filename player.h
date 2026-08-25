@@ -21,11 +21,11 @@ struct Projectiles {
 };
 
 // DEFINE PLAYER MOVEMENT FUNCTIONS
-void player_move_left(Player &player, float dt, SQUARE walls, Projectiles projectiles);
-void player_move_right(Player &player, float dt, SQUARE walls, Projectiles projectiles);
+void player_move_left(Player &player, float dt, SQUARE walls, Projectiles &projectiles);
+void player_move_right(Player &player, float dt, SQUARE walls, Projectiles &projectiles);
 
-void player_move_up(Player &player, float dt, SQUARE walls, Projectiles projectiles);
-void player_move_down(Player &player, float dt, SQUARE walls, Projectiles projectiles);
+void player_move_up(Player &player, float dt, SQUARE walls, Projectiles &projectiles);
+void player_move_down(Player &player, float dt, SQUARE walls, Projectiles &projectiles);
 
 
 # endif
