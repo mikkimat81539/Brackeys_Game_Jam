@@ -1,7 +1,7 @@
 # ifndef OPPONENTS
 # define OPPONENTS
 
-int SPAWN_RATE = 60; // The larger the value the easier the code
+int SPAWN_RATE = 60;
 
 struct Opponent {
 	int x;

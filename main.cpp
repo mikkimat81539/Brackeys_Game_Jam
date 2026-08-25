@@ -31,8 +31,6 @@ int main(){
 	walls.width = 100;
 	walls.height = 100;
 
-	float wall_area = walls.width * walls.height;	
-
 	// Create Roof
 	ROOF roof;
 	roof.position = {float(walls.x) + 50, 170};	
@@ -79,14 +77,15 @@ int main(){
 
 	srand(time(0)); // set up random seed
 
-	int randY = rand() % SCREEN_HEIGHT; // spawn random pos between 0 - 599;
-	opponent.y = randY;
+	float spawnTimer = 0; // spawn timer
+
+//	int randY = rand() % SCREEN_HEIGHT; // spawn random pos between 0 - 599;
+//	opponent.y = randY;
 
 	opponent.radius = 10;
+	opponent.velocity = 20;
 
-	int alarm = SPAWN_RATE; // Every FPS spawn
-
-	opponent.velocity = 200;
+	vector<Opponent> spawn = {};
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -154,9 +153,24 @@ int main(){
 
 		hose.end_pos = player.position; // Have hose follow player
 
-		// opponent movement
-		opponent.x -= opponent.velocity * dt;
-		opponent.y += opponent.velocity * dt;
+		// SPAWN OPPONENT
+		spawnTimer += GetFrameTime();
+
+		if (spawnTimer >= 1.0f){
+			int randY = rand() % SCREEN_HEIGHT; // spawn random pos between 0 - 599;
+
+			opponent.y = randY;
+			spawn.push_back(opponent);
+
+			spawnTimer = 0;
+		}
+
+	
+		// UPDATE
+		for (int i=0; i < spawn.size(); i++){
+			spawn[i].x -= spawn[i].velocity * dt;
+			spawn[i].y += spawn[i].velocity * dt;
+		}
 
 
 		BeginDrawing();
@@ -173,8 +187,11 @@ int main(){
 
 		DrawPoly(player.position, 4, 15, 45, BLACK); // player
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
-	
-		DrawCircleLines(opponent.x, opponent.y, opponent.radius, RED);	
+
+		for (int i=0; i < spawn.size(); i++){	
+			DrawCircleLines(spawn[i].x, spawn[i].y, spawn[i].radius, RED); // opponent	
+		}
+
 		EndDrawing();
 	}
 	
