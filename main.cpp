@@ -59,10 +59,10 @@ int main(){
 	// PROJECTILES
 	Projectiles projectiles;
 	projectiles.radius = 5.0f;
-	projectiles.velocity = 3000.0f;
+	projectiles.velocity = 1000.0f;
 	projectiles.active = false;
 
-	projectiles.right = false;
+	projectiles.right = true;
 	projectiles.left = false;
 	projectiles.up = false;
 	projectiles.down = false;
@@ -91,20 +91,20 @@ int main(){
 			player_move_left(player, dt, walls, projectiles);
 		}
 
-		if (IsKeyDown(KEY_RIGHT)){
+		else if (IsKeyDown(KEY_RIGHT)){
 			player_move_right(player, dt, walls, projectiles);
 		}
 
-		if (IsKeyDown(KEY_UP)){
+		else if (IsKeyDown(KEY_UP)){
 			player_move_up(player, dt, walls, projectiles);
 		}
 
-		if (IsKeyDown(KEY_DOWN)){
+		else if (IsKeyDown(KEY_DOWN)){
 			player_move_down(player, dt, walls, projectiles);
 		}
 
 		// Projectile movement
-		if (IsKeyPressed(KEY_SPACE)) {
+		else if (IsKeyPressed(KEY_SPACE)) {
 			projectiles.x = player.position.x;
 			projectiles.y = player.position.y;
 			projectiles.active = true;
@@ -115,17 +115,21 @@ int main(){
 				projectiles.x += projectiles.velocity * dt;
 			}
 
-			if (projectiles.left){
+			else if (projectiles.left){
 				projectiles.x -= projectiles.velocity * dt;
 			}
 
-			if (projectiles.down){
+			else if (projectiles.down){
 				projectiles.y += projectiles.velocity * dt;
 			}
 
-			if (projectiles.up){
+			else if (projectiles.up){
 				projectiles.y -= projectiles.velocity * dt;
 			}
+		
+//			if (projectiles.x > SCREEN_WIDTH || projectiles.x < 0 || projectiles.y > SCREEN_HEIGHT || projectiles.y < 0){
+//				projectiles.active = false;
+//			}
 		}
 
 
