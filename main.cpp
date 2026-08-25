@@ -59,7 +59,7 @@ int main(){
 	// PROJECTILES
 	Projectiles projectiles;
 	projectiles.radius = 5.0f;
-	projectiles.velocity = 30.0f;
+	projectiles.velocity = 3000.0f;
 	projectiles.active = false;
 
 	projectiles.right = false;
@@ -103,38 +103,6 @@ int main(){
 			player_move_down(player, dt, walls, projectiles);
 		}
 
-		hose.end_pos = player.position; // Have hose follow player
-
-
-		// Projectile movement
-//		if (IsKeyPressed(KEY_SPACE)) {
-//			projectiles.x = player.position.x;
-//			projectiles.y = player.position.y;
-//			projectiles.active = true;
-//		}
-//
-//		if (projectiles.active) {
-//			projectiles.x += projectiles.velocity * dt;
-//		
-//			if (projectiles.right){
-//				projectiles.x += projectiles.velocity;
-//			}
-//
-//			if (projectiles.left){
-//				projectiles.x -= projectiles.velocity;
-//			}
-//
-//			if (projectiles.down){
-//				projectiles.y += projectiles.velocity;
-//			}
-//
-//			if (projectiles.up){
-//				projectiles.y -= projectiles.velocity;
-//			}
-//		}
-//		
-
-
 		// Projectile movement
 		if (IsKeyPressed(KEY_SPACE)) {
 			projectiles.x = player.position.x;
@@ -145,6 +113,8 @@ int main(){
 		if (projectiles.active) {
 			projectiles.x += projectiles.velocity * dt;
 		}
+
+		hose.end_pos = player.position; // Have hose follow player
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -170,7 +140,7 @@ int main(){
 // PLAYER MOVEMENT FUNCTIONS
 void player_move_left(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.x -= player.velocity.x * dt;
-	projectiles.left = true;
+	// projectiles.left = true;
 
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
@@ -184,7 +154,7 @@ void player_move_left(Player &player, float dt, SQUARE walls, Projectiles projec
 
 void player_move_right(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.x += player.velocity.x * dt;
-	projectiles.right = true;
+	// projectiles.right = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
 		player.position.x -= player.velocity.x * dt;
@@ -198,7 +168,7 @@ void player_move_right(Player &player, float dt, SQUARE walls, Projectiles proje
 
 void player_move_up(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.y -= player.velocity.y * dt;
-	projectiles.up = true;
+	// projectiles.up = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width), float(walls.height)+8})) {
 		player.position.y += player.velocity.y * dt;
@@ -212,7 +182,7 @@ void player_move_up(Player &player, float dt, SQUARE walls, Projectiles projecti
 
 void player_move_down(Player &player, float dt, SQUARE walls, Projectiles projectiles){
 	player.position.y += player.velocity.y * dt;
-	projectiles.down = true;
+	// projectiles.down = true;
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y)-12, float(walls.width), float(walls.height)})) {
 		player.position.y -= player.velocity.y * dt;
