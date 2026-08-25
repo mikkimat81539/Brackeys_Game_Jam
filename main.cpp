@@ -3,6 +3,8 @@
 # include "raylib.h"
 # include "constants.h"
 # include "player.h"
+# include "opponent.h"
+
 
 using namespace std;
 
@@ -19,6 +21,13 @@ int main(){
 	player.width = 20;
 	player.height = 20;	
 	player.velocity = {500, 500};
+
+	// OPPONENT
+	Opponent opponent;
+	opponent.x = player.x + 30;
+	opponent.y = player.y;
+	opponent.radius = 10;
+	opponent.velocity = {250, 250};
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -57,8 +66,10 @@ int main(){
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK);
-		
+		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // Player
+	
+		DrawCircleLines(opponent.x, opponent.y, opponent.radius, RED); // Opponent
+	
 		EndDrawing();
 	}
 
