@@ -1,4 +1,5 @@
 # include <iostream>
+# include <cmath>
 
 # include "raylib.h"
 # include "constants.h"
@@ -24,8 +25,8 @@ int main(){
 
 	// OPPONENT
 	Opponent opponent;
-	opponent.x = player.x + 30;
-	opponent.y = player.y;
+	opponent.x = 100;
+	opponent.y = 100;
 	opponent.radius = 10;
 	opponent.velocity = {250, 250};
 
@@ -36,6 +37,23 @@ int main(){
 	while(!WindowShouldClose()){
 		// DELTA TIME
 		float dt = GetFrameTime();
+
+		// grab the difference between player and opponent
+		float dir_x = player.x - opponent.x;
+		float dir_y = player.y - opponent.y;
+
+		// define the distance using distance formula
+		float length = sqrt(dir_x*dir_x + dir_y*dir_y); // Euclidean distance / magnitude formula for a 2D vector.
+
+		// NORMALIZE
+		if (length > 0.0f){
+			dir_x /= length; // Normalizing direction makes the direction have a length of 1.
+			dir_y /= length;
+		}
+
+		opponent.x += dir_x * opponent.velocity.x * dt;
+		opponent.y += dir_y * opponent.velocity.y * dt;
+
 
 		// PLAYER MOVEMENT
 		if (IsKeyDown(KEY_LEFT)){
