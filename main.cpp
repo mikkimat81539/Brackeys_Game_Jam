@@ -1,5 +1,6 @@
 # include <iostream>
-# include <cmath>
+# include <vector>
+
 # include "raylib.h"
 # include "constants.h"
 # include "property.h"
@@ -61,11 +62,13 @@ int main(){
 	projectiles.radius = 5.0f;
 	projectiles.velocity = 1000.0f;
 	projectiles.active = false;
+	projectiles.projectile_num = 1;
 
-	projectiles.right = true;
-	projectiles.left = false;
-	projectiles.up = false;
-	projectiles.down = false;
+
+//	projectiles.right = true;
+//	projectiles.left = false;
+//	projectiles.up = false;
+//	projectiles.down = false;
 
 
 	// FPS
@@ -104,27 +107,30 @@ int main(){
 		}
 
 		// Projectile movement
-		else if (IsKeyPressed(KEY_SPACE)) {
+		if (IsKeyPressed(KEY_SPACE)) {
 			projectiles.x = player.position.x;
 			projectiles.y = player.position.y;
+			
+			projectiles.direction = player.direction;
+
 			projectiles.active = true;
 		}
 
 		if (projectiles.active) {
-			if (projectiles.right){
-				projectiles.x += projectiles.velocity * dt;
-			}
-
-			else if (projectiles.left){
+			if (projectiles.direction == Direction::Left){
 				projectiles.x -= projectiles.velocity * dt;
 			}
 
-			else if (projectiles.down){
-				projectiles.y += projectiles.velocity * dt;
+			else if (projectiles.direction == Direction::Right){
+				projectiles.x += projectiles.velocity * dt;
 			}
 
-			else if (projectiles.up){
+			else if (projectiles.direction == Direction::Up){
 				projectiles.y -= projectiles.velocity * dt;
+			}
+
+			else if (projectiles.direction == Direction::Down){
+				projectiles.y += projectiles.velocity * dt;
 			}
 		
 //			if (projectiles.x > SCREEN_WIDTH || projectiles.x < 0 || projectiles.y > SCREEN_HEIGHT || projectiles.y < 0){
@@ -144,8 +150,15 @@ int main(){
 		DrawRectangleLines(walls.x, walls.y, walls.width, walls.height, BLACK); // walls
 		DrawRectangleLines(fence.x, fence.y, fence.width, fence.height, RED); // fence
 		DrawLineBezier(hose.start_pos, hose.end_pos, hose.thickness, hose_color); // garden hose
+		
 		DrawCircleLines(projectiles.x, projectiles.y, projectiles.radius, BLACK); // projectiles
-		DrawPoly(player.position, 4, 15, 45, BLACK);
+
+
+//		for (int i=0; i <= projectiles.projectile_num; i++){
+//			DrawCircleLines(projectiles.x + (i * 20), projectiles.y, projectiles.radius, BLACK); // projectiles
+//		}
+
+		DrawPoly(player.position, 4, 15, 45, BLACK); // player
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
 		
 		EndDrawing();
@@ -159,10 +172,15 @@ int main(){
 // PLAYER MOVEMENT FUNCTIONS
 void player_move_left(Player &player, float dt, SQUARE walls, Projectiles &projectiles){
 	player.position.x -= player.velocity.x * dt;
-	projectiles.left = true;
-	projectiles.right = false;
-	projectiles.up = false;
-	projectiles.down = false;
+
+	player.direction = Direction::Left;
+	// player.position.x -= player.velocity.x * dt;
+	
+
+//	projectiles.left = true;
+//	projectiles.right = false;
+//	projectiles.up = false;
+//	projectiles.down = false;
 
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width)+8, float(walls.height)})) {
@@ -176,10 +194,14 @@ void player_move_left(Player &player, float dt, SQUARE walls, Projectiles &proje
 
 void player_move_right(Player &player, float dt, SQUARE walls, Projectiles &projectiles){
 	player.position.x += player.velocity.x * dt;
-	projectiles.left = false;
-	projectiles.right = true;
-	projectiles.up = false;
-	projectiles.down = false;
+
+	player.direction = Direction::Right;
+	// player.position.x += player.velocity.x * dt;
+	
+//	projectiles.left = false;
+//	projectiles.right = true;
+//	projectiles.up = false;
+//	projectiles.down = false;
 
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x)-10, float(walls.y), float(walls.width), float(walls.height)})) {
@@ -194,10 +216,14 @@ void player_move_right(Player &player, float dt, SQUARE walls, Projectiles &proj
 
 void player_move_up(Player &player, float dt, SQUARE walls, Projectiles &projectiles){
 	player.position.y -= player.velocity.y * dt;
-	projectiles.left = false;
-	projectiles.right = false;
-	projectiles.up = true;
-	projectiles.down = false;
+
+	player.direction = Direction::Up;
+	// player.position.y -= player.velocity.y * dt;
+
+//	projectiles.left = false;
+//	projectiles.right = false;
+//	projectiles.up = true;
+//	projectiles.down = false;
 
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y), float(walls.width), float(walls.height)+8})) {
@@ -212,10 +238,14 @@ void player_move_up(Player &player, float dt, SQUARE walls, Projectiles &project
 
 void player_move_down(Player &player, float dt, SQUARE walls, Projectiles &projectiles){
 	player.position.y += player.velocity.y * dt;
-	projectiles.left = false;
-	projectiles.right = false;
-	projectiles.up = false;
-	projectiles.down = true;
+
+	player.direction = Direction::Down;
+	// player.position.y += player.velocity.y * dt;
+
+//	projectiles.left = false;
+//	projectiles.right = false;
+//	projectiles.up = false;
+//	projectiles.down = true;
 
 
 	if (CheckCollisionPointRec(player.position, Rectangle{float(walls.x), float(walls.y)-12, float(walls.width), float(walls.height)})) {
