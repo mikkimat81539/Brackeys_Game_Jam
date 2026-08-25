@@ -1,11 +1,13 @@
 # include <iostream>
 # include <vector>
+# include <cstdlib>
+# include <ctime>
 
 # include "raylib.h"
 # include "constants.h"
 # include "property.h"
 # include "player.h"
-
+# include "opponents.h"
 
 using namespace std;
 
@@ -71,6 +73,21 @@ int main(){
 //	projectiles.down = false;
 
 
+	// OPPONENTS
+	Opponent opponent;	
+	opponent.x = SCREEN_WIDTH + 40; // need to spawn outside of screen
+
+	srand(time(0)); // set up random seed
+
+	int randY = rand() % SCREEN_HEIGHT; // spawn random pos between 0 - 599;
+	opponent.y = randY;
+
+	opponent.radius = 10;
+
+	int alarm = SPAWN_RATE; // Every FPS spawn
+
+	opponent.velocity = 200;
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -132,14 +149,15 @@ int main(){
 			else if (projectiles.direction == Direction::Down){
 				projectiles.y += projectiles.velocity * dt;
 			}
-		
-//			if (projectiles.x > SCREEN_WIDTH || projectiles.x < 0 || projectiles.y > SCREEN_HEIGHT || projectiles.y < 0){
-//				projectiles.active = false;
-//			}
 		}
 
 
 		hose.end_pos = player.position; // Have hose follow player
+
+		// opponent movement
+		opponent.x -= opponent.velocity * dt;
+		opponent.y += opponent.velocity * dt;
+
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
@@ -153,14 +171,10 @@ int main(){
 		
 		DrawCircleLines(projectiles.x, projectiles.y, projectiles.radius, BLACK); // projectiles
 
-
-//		for (int i=0; i <= projectiles.projectile_num; i++){
-//			DrawCircleLines(projectiles.x + (i * 20), projectiles.y, projectiles.radius, BLACK); // projectiles
-//		}
-
 		DrawPoly(player.position, 4, 15, 45, BLACK); // player
 		DrawPoly(roof.position, roof.sides, roof.size, roof.rotation, BLACK); // roof
-		
+	
+		DrawCircleLines(opponent.x, opponent.y, opponent.radius, RED);	
 		EndDrawing();
 	}
 	
