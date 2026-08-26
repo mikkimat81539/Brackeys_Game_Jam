@@ -60,6 +60,7 @@ int main(){
 			spawnTimer = 0.0f;
 		}
 
+
 		// UPDATE OPPONENT
 		for (int i=0; i < spawn.size(); i++){
 			// grab the difference between player and opponent
@@ -86,14 +87,18 @@ int main(){
 	
 			if (d <= 50){
 				// If distance between two points is less than 5 space out
-				spawn[i].x -= 70;
-				spawn[i].y -= 70;
+				spawn[i].x -= 100;
+				spawn[i].y -= 100;
 
-				spawn[i-1].x += 70;
-				spawn[i-1].y += 70;
+				spawn[i-1].x += 100;
+				spawn[i-1].y += 100;
 
 			}
-	
+
+			if (spawn.size() == SPAWN_RATE) {
+				exit(0);
+			}
+			
 		}
 
 		// PLAYER MOVEMENT
@@ -128,7 +133,7 @@ int main(){
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // Player
 
 		for (int i=0; i < spawn.size(); i++){	
-			DrawCircleLines(spawn[i].x, spawn[i].y, spawn[i].radius, RED); // Opponent
+			DrawCircle(spawn[i].x, spawn[i].y, spawn[i].radius, RED); // Opponent
 		}
 	
 		EndDrawing();
