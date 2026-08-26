@@ -8,6 +8,8 @@
 
 using namespace std;
 
+# define print(x) cout << x << endl;
+
 int main(){
 	// SCREEN
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Projectile Practice");
@@ -31,9 +33,6 @@ int main(){
 	// projectile.position.y = playerCenterY;
 	projectile.radius = 5;
 
-	// float projectileCenterX = projectile.position.x + projectile.radius;
-	// float projectileCenterY = projectile.position.y + projectile.radius;
-	
 	projectile.velocity = {250, 250};
 
 	projectile.active = false;
@@ -50,59 +49,61 @@ int main(){
 		float dt = GetFrameTime();
 
 		// KEY INPUT
-		if (IsKeyDown(KEY_LEFT)){
+		if (IsKeyPressed(KEY_LEFT)){
 			projectile.direction = Direction::Left;
 		}
 			
-		else if (IsKeyDown(KEY_RIGHT)){
+		else if (IsKeyPressed(KEY_RIGHT)){
 			projectile.direction = Direction::Right;
 		}
 
-		else if (IsKeyDown(KEY_UP)){
+		else if (IsKeyPressed(KEY_UP)){
 			projectile.direction = Direction::Up;
 		}
 
-		else if (IsKeyDown(KEY_DOWN)){
+		else if (IsKeyPressed(KEY_DOWN)){
 			projectile.direction = Direction::Down;
 		}
 
 		if (IsKeyPressed(KEY_SPACE)){
-			projectile.position.x = player.position.x;
-			projectile.position.y = player.position.y;
+			projectile.position.x = player.position.x - projectile.radius;
+			projectile.position.y = player.position.y - 10;
 			
-			projectile.direction = player.direction;
 
 			projectile.active = true;
 
+			magazine.push_back(projectile);
+
 		}
 
-		if (projectile.active) {
-			if (projectile.direction == Direction::Left){
-				projectile.position.x -= projectile.velocity.x * dt;
-			}
+		for (int i = 0; i < magazine.size(); i++){
+			if (magazine[i].active) {
+				if (magazine[i].direction == Direction::Left){
+					magazine[i].position.x -= magazine[i].velocity.x * dt;
+				}
 
-			else if (projectile.direction == Direction::Right){
-				projectile.position.x += projectile.velocity.x * dt;
-			}
+				else if (magazine[i].direction == Direction::Right){
+					magazine[i].position.x += magazine[i].velocity.x * dt;
+				}
 
-			else if (projectile.direction == Direction::Up){
-				projectile.position.y -= projectile.velocity.y * dt;
-			}
+				else if (magazine[i].direction == Direction::Up){
+					magazine[i].position.y -= magazine[i].velocity.y * dt;
+				}
 
-			else if (projectile.direction == Direction::Down){
-				projectile.position.y += projectile.velocity.y * dt;
+				else if (magazine[i].direction == Direction::Down){
+					magazine[i].position.y += magazine[i].velocity.y * dt;
+				}
 			}
 		}
-
-
-		float projectileCenterX = projectile.position.x - projectile.radius;
-		float projectileCenterY = projectile.position.y - projectile.radius;
 
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		DrawCircle(projectileCenterX, projectileCenterY, projectile.radius, RED); // PROJECTILE
+		
+		for (int i=0; i < magazine.size(); i++){
+			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, RED);
+		}
 
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // PLAYER
 
