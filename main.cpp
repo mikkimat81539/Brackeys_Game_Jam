@@ -66,6 +66,9 @@ int main(){
 
 	srand(time(0)); // seed for randomness
 	int randOpps = rand() % oppsList.size(); // grab a random index from oppsList
+	int randOpps1 = rand() % oppsList.size(); // grab a random index from oppsList
+	int randOpps2 = rand() % oppsList.size(); // grab a random index from oppsList
+
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -125,7 +128,6 @@ int main(){
 			}
 		}
 
-	
 		// DRAW
 		BeginDrawing();	
 		ClearBackground(RAYWHITE);		
@@ -137,7 +139,13 @@ int main(){
 
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // player
 
-		DrawCircle(oppsList[randOpps].position.x, oppsList[randOpps].position.y, oppsList[randOpps].radius, oppsList[randOpps].color);
+		DrawCircle(oppsList[randOpps].position.x, oppsList[randOpps].position.y, oppsList[randOpps].radius, oppsList[randOpps].color); // opponents
+
+		DrawCircle(oppsList[randOpps1].position.x + 30, oppsList[randOpps1].position.y + 50, oppsList[randOpps1].radius, oppsList[randOpps1].color); // opponents
+
+	
+		DrawCircle(oppsList[randOpps2].position.x + 50, oppsList[randOpps2].position.y + 90, oppsList[randOpps2].radius, oppsList[randOpps2].color); // opponents
+
 
 		EndDrawing();
 	}
