@@ -31,7 +31,7 @@ int main(){
 	opponent.x = 0;
 	opponent.y = 0;
 	opponent.radius = 10;
-	opponent.velocity = {250, 250};
+	opponent.velocity = {150, 150};
 
 	// OPPONENT STORAGE
 	vector<Opponent> spawn = {};
@@ -46,22 +46,6 @@ int main(){
 	while(!WindowShouldClose()){
 		// DELTA TIME
 		float dt = GetFrameTime();
-
-		// grab the difference between player and opponent
-//		float dir_x = player.x - opponent.x;
-//		float dir_y = player.y - opponent.y;
-//
-//		// define the distance using distance formula
-//		float length = sqrt(dir_x*dir_x + dir_y*dir_y); // Euclidean distance / magnitude formula for a 2D vector.
-//
-//		// NORMALIZE
-//		if (length > 0.0f){
-//			dir_x /= length; // Normalizing direction makes the direction have a length of 1.
-//			dir_y /= length;
-//		}
-
-		// opponent.x += dir_x * opponent.velocity.x * dt;
-		// opponent.y += dir_y * opponent.velocity.y * dt;
 
 		// SPAWN OPPONENT TIME
 		spawnTimer += GetFrameTime();
@@ -93,6 +77,23 @@ int main(){
 			
 			spawn[i].x += dir_x * spawn[i].velocity.x * dt;
 			spawn[i].y += dir_y * spawn[i].velocity.y * dt;
+
+			// Opponent distance
+			float dx = pow((spawn[i].x - spawn[i-1].x),2);
+			float dy = pow((spawn[i].y - spawn[i-1].y),2);
+	
+			float d = sqrt(dx+dy);
+	
+			if (d <= 50){
+				// If distance between two points is less than 5 space out
+				spawn[i].x -= 70;
+				spawn[i].y -= 70;
+
+				spawn[i-1].x += 70;
+				spawn[i-1].y += 70;
+
+			}
+	
 		}
 
 		// PLAYER MOVEMENT
