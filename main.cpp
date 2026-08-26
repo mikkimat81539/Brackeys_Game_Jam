@@ -53,17 +53,18 @@ int main(){
 			projectile.direction = Direction::Left;
 		}
 			
-		if (IsKeyPressed(KEY_RIGHT)){
+		else if (IsKeyPressed(KEY_RIGHT)){
 			projectile.direction = Direction::Right;
 		}
 
-		if (IsKeyPressed(KEY_UP)){
+		else if (IsKeyPressed(KEY_UP)){
 			projectile.direction = Direction::Up;
 		}
 
-		if (IsKeyPressed(KEY_DOWN)){
+		else if (IsKeyPressed(KEY_DOWN)){
 			projectile.direction = Direction::Down;
 		}
+
 
 		if (IsKeyPressed(KEY_SPACE)){
 			projectile.position.x = player.position.x - 10; // Reset back to original position
@@ -94,9 +95,13 @@ int main(){
 				if (magazine[i].direction == Direction::Down){
 					magazine[i].position.y += magazine[i].velocity.y * dt;
 				}
+			
+			}
+
+			if (magazine[i].position.x > SCREEN_WIDTH || magazine[i].position.x < 0 || magazine[i].position.y > SCREEN_HEIGHT || magazine[i].position.y < 0){
+				magazine.erase(magazine.begin());
 			}
 		}
-
 
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
