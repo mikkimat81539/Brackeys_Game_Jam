@@ -26,16 +26,16 @@ int main(){
 	
 	player.velocity = {400, 400};
 
-
 	// PROJECTILE
 	Projectile projectile;
-	// projectile.position.x = playerCenterX;
-	// projectile.position.y = playerCenterY;
 	projectile.radius = 5;
 
 	projectile.velocity = {250, 250};
 
 	projectile.active = false;
+
+	projectile.direction = Direction::Right;
+
 
 	// Store Projectile in vector
 	vector<Projectile> magazine = {};
@@ -53,44 +53,45 @@ int main(){
 			projectile.direction = Direction::Left;
 		}
 			
-		else if (IsKeyPressed(KEY_RIGHT)){
+		if (IsKeyPressed(KEY_RIGHT)){
 			projectile.direction = Direction::Right;
 		}
 
-		else if (IsKeyPressed(KEY_UP)){
+		if (IsKeyPressed(KEY_UP)){
 			projectile.direction = Direction::Up;
 		}
 
-		else if (IsKeyPressed(KEY_DOWN)){
+		if (IsKeyPressed(KEY_DOWN)){
 			projectile.direction = Direction::Down;
 		}
 
 		if (IsKeyPressed(KEY_SPACE)){
-			projectile.position.x = player.position.x - 10;
+			projectile.position.x = player.position.x - 10; // Reset back to original position
 			projectile.position.y = player.position.y - 10;
 			
-
 			projectile.active = true;
 
 			magazine.push_back(projectile);
 
 		}
 
+
+		// Projectile Movement
 		for (int i = 0; i < magazine.size(); i++){
 			if (magazine[i].active) {
 				if (magazine[i].direction == Direction::Left){
 					magazine[i].position.x -= magazine[i].velocity.x * dt;
 				}
 
-				else if (magazine[i].direction == Direction::Right){
+				if (magazine[i].direction == Direction::Right){
 					magazine[i].position.x += magazine[i].velocity.x * dt;
 				}
 
-				else if (magazine[i].direction == Direction::Up){
+				if (magazine[i].direction == Direction::Up){
 					magazine[i].position.y -= magazine[i].velocity.y * dt;
 				}
 
-				else if (magazine[i].direction == Direction::Down){
+				if (magazine[i].direction == Direction::Down){
 					magazine[i].position.y += magazine[i].velocity.y * dt;
 				}
 			}
@@ -100,7 +101,8 @@ int main(){
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		
+	
+		// Draw Projectile	
 		for (int i=0; i < magazine.size(); i++){
 			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, RED);
 		}
