@@ -6,6 +6,8 @@ struct Projectile{
 	float radius;
 	Vector2 velocity;
 	bool active;
+
+	Direction direction;
 };
 
 # endif
