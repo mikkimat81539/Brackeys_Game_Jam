@@ -46,17 +46,17 @@ int main(){
 	Opponent opps2;
 	Opponent opps3;
 
-	opps1.position = {100, 100};
-	opps2.position = {100, 100};
-	opps3.position = {100, 100};
+	opps1.position = {100, 270};
+	opps2.position = {100, 270};
+	opps3.position = {100, 270};
 
 	opps1.velocity = {250, 250};
 	opps2.velocity = {250, 250};
 	opps3.velocity = {250, 250};
 
-	opps1.radius = 20;
-	opps2.radius = 20;
-	opps3.radius = 20;
+	opps1.radius = 10;
+	opps2.radius = 10;
+	opps3.radius = 10;
 
 	opps1.color = RED;
 	opps2.color = GREEN;
@@ -124,7 +124,12 @@ int main(){
 			if (magazine[i].position.x > SCREEN_WIDTH || magazine[i].position.x < 0 || magazine[i].position.y > SCREEN_HEIGHT || magazine[i].position.y < 0) {
 				magazine.erase(magazine.begin());
 			}
+
+			if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, opps1.position, opps1.radius)){
+				print(true);
+			}
 		}
+
 
 		// DRAW
 		BeginDrawing();	
