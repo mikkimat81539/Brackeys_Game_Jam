@@ -66,7 +66,7 @@ int main(){
 		}
 
 		if (IsKeyPressed(KEY_SPACE)){
-			projectile.position.x = player.position.x - projectile.radius;
+			projectile.position.x = player.position.x - 10;
 			projectile.position.y = player.position.y - 10;
 			
 
