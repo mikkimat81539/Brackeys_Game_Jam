@@ -10,3 +10,6 @@ Build/
 
 # macOS
 .DS_Store
+
+# All .exe files
+*.exe
