@@ -1,8 +1,10 @@
 # include <iostream>
+# include <vector>
 
 # include "raylib.h"
 # include "constants.h"
 # include "player.h"
+# include "projectile.h"
 
 using namespace std;
 
@@ -24,11 +26,50 @@ int main(){
 	float playerCenterX = player.position.x - player.width;
 	float playerCenterY = player.position.y - player.height;
 
+	// PROJECTILES
+	Projectile projectile;
+	projectile.position.x = player.position.x - 5;
+	projectile.position.y = player.position.y - 5;
+
+	projectile.direction = player.direction; // INITIAL IS RIGHT
+
+	projectile.velocity = {300, 300};
+	projectile.active = false;
+
+	// projectile storage
+	vector<Projectile> magazine = {};
+
 	// FPS
 	SetTargetFPS(FPS);
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
+		// DELTA TIME
+		float dt = GetFrameTime();
+
+		// set player direction when key is pressed
+		if (IsKeyPressed(KEY_LEFT)){
+			projectile.direction =  Direction::Left;	
+		}
+
+		if (IsKeyPressed(KEY_RIGHT)){
+			projectile.direction =  Direction::Right;
+		}
+
+		if (IsKeyPressed(KEY_UP)){
+			projectile.direction =  Direction::Up;
+		}
+
+		if (IsKeyPressed(KEY_DOWN)){
+			projectile.direction =  Direction::Down;
+		}
+
+		print(projectile.direction);
+
+		// set projectile direction when space bar is pressed
+
+		// apply projectile movement from vector
+	
 		BeginDrawing();	
 		ClearBackground(RAYWHITE);		
 
