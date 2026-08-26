@@ -95,6 +95,7 @@ int main(){
 
 			}
 
+			// SPAWN RATE LIMIT
 			if (spawn.size() == SPAWN_RATE) {
 				exit(0);
 			}
