@@ -41,6 +41,32 @@ int main(){
 	// projectile storage
 	vector<Projectile> magazine = {};
 
+	// OPPONENTS
+	Opponent opps1;
+	Opponent opps2;
+	Opponent opps3;
+
+	opps1.position = {100, 100};
+	opps2.position = {100, 100};
+	opps3.position = {100, 100};
+
+	opps1.velocity = {250, 250};
+	opps2.velocity = {250, 250};
+	opps3.velocity = {250, 250};
+
+	opps1.radius = 20;
+	opps2.radius = 20;
+	opps3.radius = 20;
+
+	opps1.color = RED;
+	opps2.color = GREEN;
+	opps3.color = BLUE;
+
+	vector<Opponent> oppsList= {opps1, opps2, opps3}; // vector of opponents
+
+	srand(time(0)); // seed for randomness
+	int randOpps = rand() % oppsList.size(); // grab a random index from oppsList
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -97,12 +123,9 @@ int main(){
 			if (magazine[i].position.x > SCREEN_WIDTH || magazine[i].position.x < 0 || magazine[i].position.y > SCREEN_HEIGHT || magazine[i].position.y < 0) {
 				magazine.erase(magazine.begin());
 			}
-
 		}
 
-		// print(magazine.size());		
-
-
+	
 		// DRAW
 		BeginDrawing();	
 		ClearBackground(RAYWHITE);		
@@ -113,6 +136,8 @@ int main(){
 		}	
 
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // player
+
+		DrawCircle(oppsList[randOpps].position.x, oppsList[randOpps].position.y, oppsList[randOpps].radius, oppsList[randOpps].color);
 
 		EndDrawing();
 	}

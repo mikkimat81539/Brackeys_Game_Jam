@@ -2,9 +2,10 @@
 # define OPPONENTS
 
 struct Opponent {
-	Vecto2 position;
+	Vector2 position;
 	Vector2 velocity;
 	float radius;
+	Color color;
 	int SPAWN_RATE;
 };
 
