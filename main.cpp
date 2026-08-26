@@ -22,7 +22,18 @@ int main(){
 	float playerCenterX = player.position.x - player.width;
 	float playerCenterY = player.position.y - player.height;
 	
-	player.velocity = {100, 100};
+	player.velocity = {400, 400};
+
+	// PROJECTILE
+	Projectile projectile;
+	projectile.position.x = playerCenterX;
+	projectile.position.y = playerCenterY;
+	projectile.radius = 5;
+
+	float projectileCenterX = playerCenterX - projectile.radius;
+	float projectileCenterY = playerCenterY - projectile.radius;
+
+	projectile.active = false;
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -34,7 +45,11 @@ int main(){
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK);
+		if (projectile.active){
+			DrawCircle(projectileCenterX, projectileCenterY, projectile.radius, RED); // PROJECTILE
+		}
+
+		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // PLAYER
 
 		EndDrawing();
 	}
