@@ -42,30 +42,18 @@ int main(){
 	vector<Projectile> magazine = {};
 
 	// OPPONENTS
-	Opponent opps1;
-	Opponent opps2;
-	Opponent opps3;
-
-	opps1.position = {100, 270};
-	opps2.position = {100, 270};
-	opps3.position = {100, 270};
-
-	opps1.velocity = {250, 250};
-	opps2.velocity = {250, 250};
-	opps3.velocity = {250, 250};
-
-	opps1.radius = 10;
-	opps2.radius = 10;
-	opps3.radius = 10;
-
-	opps1.color = RED;
-	opps2.color = GREEN;
-	opps3.color = BLUE;
-
-	vector<Opponent> oppsList= {opps1, opps2, opps3}; // vector of opponents
+	Opponent opps;
+	
+	opps.position = {700, 270};
+	
+	opps.velocity = {250, 250};
+	
+	opps.radius = 10;
+	
+	vector<Color> oppsColor = {RED, GREEN, BLUE}; // vector of opponents
 
 	srand(time(0)); // seed for randomness
-	int randOpps = rand() % oppsList.size(); // grab a random index from oppsList
+	int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
 
 
 	// FPS
@@ -125,7 +113,8 @@ int main(){
 				magazine.erase(magazine.begin());
 			}
 
-			if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, opps1.position, opps1.radius)){
+			if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, opps.position, opps.radius)){
+				// the opponent that is hit will disappear from the vector
 				print(true);
 			}
 		}
@@ -142,7 +131,7 @@ int main(){
 
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // player
 
-		DrawCircle(oppsList[randOpps].position.x, oppsList[randOpps].position.y, oppsList[randOpps].radius, oppsList[randOpps].color); // opponents
+		DrawCircle(opps.position.x, opps.position.y, opps.radius, oppsColor[randOpps]); // opponents
 
 		EndDrawing();
 	}
