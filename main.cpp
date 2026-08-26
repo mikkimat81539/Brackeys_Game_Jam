@@ -1,10 +1,13 @@
 # include <iostream>
 # include <vector>
+# include <cstdlib>
+# include <ctime>
 
 # include "raylib.h"
 # include "constants.h"
 # include "player.h"
 # include "projectile.h"
+# include "opponent.h"
 
 using namespace std;
 
@@ -28,12 +31,11 @@ int main(){
 
 	// PROJECTILES
 	Projectile projectile;
-	projectile.position.x = player.position.x - 5;
-	projectile.position.y = player.position.y - 5;
+	projectile.radius = 3;
 
-	projectile.direction = player.direction; // INITIAL IS RIGHT
+	projectile.direction = Direction::Right; // INITIAL IS RIGHT
 
-	projectile.velocity = {300, 300};
+	projectile.velocity = {500, 500};
 	projectile.active = false;
 
 	// projectile storage
@@ -52,28 +54,65 @@ int main(){
 			projectile.direction =  Direction::Left;	
 		}
 
-		if (IsKeyPressed(KEY_RIGHT)){
+		else if (IsKeyPressed(KEY_RIGHT)){
 			projectile.direction =  Direction::Right;
 		}
 
-		if (IsKeyPressed(KEY_UP)){
+		else if (IsKeyPressed(KEY_UP)){
 			projectile.direction =  Direction::Up;
 		}
 
-		if (IsKeyPressed(KEY_DOWN)){
+		else if (IsKeyPressed(KEY_DOWN)){
 			projectile.direction =  Direction::Down;
 		}
 
-		print(projectile.direction);
+		// set projectile movement when space bar is pressed
+		if (IsKeyPressed(KEY_SPACE)){
+			projectile.position.x = player.position.x - 10;
+			projectile.position.y = player.position.y - 30;
 
-		// set projectile direction when space bar is pressed
+			projectile.active = true;
+
+			magazine.push_back(projectile);
+		}
 
 		// apply projectile movement from vector
-	
+		for (int i=0; i < magazine.size(); i++){
+			if (magazine[i].direction == Direction::Left){
+				magazine[i].position.x -= magazine[i].velocity.x * dt;
+			}
+
+			if (magazine[i].direction == Direction::Right){
+				magazine[i].position.x += magazine[i].velocity.x * dt;
+			}
+
+			if (magazine[i].direction == Direction::Up){
+				magazine[i].position.y -= magazine[i].velocity.y * dt;
+			}
+
+			if (magazine[i].direction == Direction::Down){
+				magazine[i].position.y += magazine[i].velocity.y * dt;
+			}
+
+			if (magazine[i].position.x > SCREEN_WIDTH || magazine[i].position.x < 0 || magazine[i].position.y > SCREEN_HEIGHT || magazine[i].position.y < 0) {
+				magazine.erase(magazine.begin());
+			}
+
+		}
+
+		// print(magazine.size());		
+
+
+		// DRAW
 		BeginDrawing();	
 		ClearBackground(RAYWHITE);		
+	
+		// draw projectile
+		for (int i =0; i < magazine.size(); i++){
+			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, BLUE);
+		}	
 
-		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK);
+		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // player
 
 		EndDrawing();
 	}

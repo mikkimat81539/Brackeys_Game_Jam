@@ -16,7 +16,7 @@ struct Player {
 	float height;
 	Vector2 velocity;
 
-	Direction direction = Direction::Right;
+	// Direction direction = Direction::Right;
 };
 
 
