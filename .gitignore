@@ -1,0 +1,12 @@
+# ignore all .swp
+*.swp
+
+# ignore dSYM
+*.dSYM
+
+# Ignore build files
+build/
+Build/
+
+# macOS
+.DS_Store
