@@ -47,7 +47,7 @@ int main(){
 	
 	// opps.position = {0, 0};
 	
-	opps.velocity = {250, 250};
+	opps.velocity = {150, 150};
 	
 	opps.radius = 10;
 	
