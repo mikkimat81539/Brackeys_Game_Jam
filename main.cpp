@@ -158,16 +158,24 @@ int main(){
 
 		}
 
-		// COLLISION
+		// COLLISION BETWEEN PROJECTILE AND OPPONENTS
 		for (int i=0; i < magazine.size(); i++){
 			for (int j = 0; j < oppsList.size(); j++){
 				if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, oppsList[j].position, oppsList[j].radius)){
 						oppsList.erase(oppsList.begin() + j);
 						j--; // decrement j after erasing
+						continue; // Don't access oppsList[j] after erasing
 				}
 			}
+			
 		}
 
+		// COLLISION BETWEEN PLAYER AND OPPONENTS
+		for (int i = 0; i < oppsList.size(); i++){
+			if(CheckCollisionCircleRec(oppsList[i].position, oppsList[i].radius, Rectangle{playerCenterX, playerCenterY, player.width, player.height})){
+				exit(0);
+			}
+		}
 
 		// DRAW
 		BeginDrawing();	
