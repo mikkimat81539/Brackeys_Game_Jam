@@ -2,6 +2,7 @@
 # include <vector>
 # include <cstdlib>
 # include <ctime>
+# include <random>
 
 # include "raylib.h"
 # include "constants.h"
@@ -44,17 +45,22 @@ int main(){
 	// OPPONENTS
 	Opponent opps;
 	
-	opps.position = {700, 270};
+	// opps.position = {0, 0};
 	
 	opps.velocity = {250, 250};
 	
 	opps.radius = 10;
 	
-	vector<Color> oppsColor = {RED, GREEN, BLUE}; // vector of opponents
+	vector<Color> oppsColor = {RED, GREEN, BLUE}; // vector of colors
+
+	opps.SPAWN_RATE = 10;
 
 	srand(time(0)); // seed for randomness
-	int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
+	// int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
 
+	vector<Opponent> oppsList = {};
+
+	float spawnTimer = 0; // spawn timer
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -63,6 +69,12 @@ int main(){
 	while(!WindowShouldClose()){
 		// DELTA TIME
 		float dt = GetFrameTime();
+
+		// GET MOUSE POS
+		if (IsMouseButtonPressed(0)){
+			cout << GetMousePosition().x << "," << GetMousePosition().y << endl;
+		}
+
 
 		// set player direction when key is pressed
 		if (IsKeyPressed(KEY_LEFT)){
@@ -120,6 +132,37 @@ int main(){
 		}
 
 
+			// Spawn Opponents
+			spawnTimer += GetFrameTime();
+
+			if (spawnTimer >= 1.0f){
+				opps.position.x = SCREEN_WIDTH + 10;
+				
+				// set random range
+				float min = 205.0;
+				float max = 330.0;
+
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_real_distribution<> randY(min, max);
+
+				opps.position.y = randY(gen);
+
+				int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
+
+				opps.color = oppsColor[randOpps];
+
+				oppsList.push_back(opps);
+
+				spawnTimer = 0.0f;
+			}			
+
+
+			// Update opponents
+			for (int i = 0; i < oppsList.size(); i++){
+				oppsList[i].position.x -= opps.velocity.x * dt;
+			}
+
 		// DRAW
 		BeginDrawing();	
 		ClearBackground(RAYWHITE);		
@@ -131,7 +174,10 @@ int main(){
 
 		DrawRectangle(playerCenterX, playerCenterY, player.width, player.height, BLACK); // player
 
-		DrawCircle(opps.position.x, opps.position.y, opps.radius, oppsColor[randOpps]); // opponents
+		for (int i=0; i < oppsList.size(); i++){
+			DrawCircle(oppsList[i].position.x, oppsList[i].position.y, oppsList[i].radius, oppsList[i].color); // opponents
+
+		}
 
 		EndDrawing();
 	}
