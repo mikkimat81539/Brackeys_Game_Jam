@@ -13,13 +13,13 @@ using namespace std;
 int main(){
 
 	// SCREEN
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Sprite Practice");
+	InitWindow(300, 150, "Sprite Practice");
 
 	// Load Player Texture
 	Texture2D player = LoadTexture("assets/idle.png");
 
 	Sprite sprite;
-	sprite.position = {0, 0}; // where to position spritesheet on screen
+	sprite.position = {80, 22}; // where to position spritesheet on screen
 
 	sprite.frameRec = {0, 0, 128, 128}; // crop the spritesheet
 
