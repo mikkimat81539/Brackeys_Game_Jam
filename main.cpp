@@ -173,7 +173,7 @@ int main(){
 		// COLLISION BETWEEN PLAYER AND OPPONENTS
 		for (int i = 0; i < oppsList.size(); i++){
 			if(CheckCollisionCircleRec(oppsList[i].position, oppsList[i].radius, Rectangle{playerCenterX, playerCenterY, player.width, player.height})){
-				exit(0);
+				print(true);
 			}
 		}
 
