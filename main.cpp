@@ -75,6 +75,37 @@ int main(){
 			cout << GetMousePosition().x << "," << GetMousePosition().y << endl;
 		}
 
+		// Spawn Opponents
+		spawnTimer += GetFrameTime();
+
+		if (spawnTimer >= 1.0f){
+			opps.position.x = SCREEN_WIDTH + 10;
+			
+			// set random range
+			float min = 205.0;
+			float max = 330.0;
+
+			random_device rd;
+			mt19937 gen(rd());
+			uniform_real_distribution<> randY(min, max);
+
+			opps.position.y = randY(gen);
+
+			int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
+
+			opps.color = oppsColor[randOpps];
+
+			oppsList.push_back(opps);
+
+			spawnTimer = 0.0f;
+		}			
+
+
+		// Update opponents
+		for (int i = 0; i < oppsList.size(); i++){
+			oppsList[i].position.x -= opps.velocity.x * dt;
+		}
+
 
 		// set player direction when key is pressed
 		if (IsKeyPressed(KEY_LEFT)){
@@ -125,43 +156,18 @@ int main(){
 				magazine.erase(magazine.begin());
 			}
 
-			if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, opps.position, opps.radius)){
-				// the opponent that is hit will disappear from the vector
-				print(true);
+		}
+
+		// COLLISION
+		for (int i=0; i < magazine.size(); i++){
+			for (int j = 0; j < oppsList.size(); j++){
+				if (CheckCollisionCircles(magazine[i].position, magazine[i].radius, oppsList[j].position, oppsList[j].radius)){
+						oppsList.erase(oppsList.begin() + j);
+						j--; // decrement j after erasing
+				}
 			}
 		}
 
-
-			// Spawn Opponents
-			spawnTimer += GetFrameTime();
-
-			if (spawnTimer >= 1.0f){
-				opps.position.x = SCREEN_WIDTH + 10;
-				
-				// set random range
-				float min = 205.0;
-				float max = 330.0;
-
-				random_device rd;
-				mt19937 gen(rd());
-				uniform_real_distribution<> randY(min, max);
-
-				opps.position.y = randY(gen);
-
-				int randOpps = rand() % oppsColor.size(); // grab a random index from oppsList
-
-				opps.color = oppsColor[randOpps];
-
-				oppsList.push_back(opps);
-
-				spawnTimer = 0.0f;
-			}			
-
-
-			// Update opponents
-			for (int i = 0; i < oppsList.size(); i++){
-				oppsList[i].position.x -= opps.velocity.x * dt;
-			}
 
 		// DRAW
 		BeginDrawing();	
