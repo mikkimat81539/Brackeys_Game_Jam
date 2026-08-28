@@ -36,7 +36,7 @@ int main() {
 	Sprite sprite_run;
 	sprite_run.position = {sprite_idle.position};
 	sprite_run.frameRec = {0, 0, 128, 128};
-	sprite_run.velocity = {10, 10};
+	sprite_run.velocity = {100, 100};
 	sprite_run.active = false;
 
 	int frameCounterRun = 0;	
@@ -53,10 +53,8 @@ int main() {
 	while(!WindowShouldClose()){
 		float dt = GetFrameTime();
 
-		// SPRITE MOVEMENT
-		print(sprite_run.active)
-
 		// PROJECTILE CONDITION
+
 		if (IsKeyDown(KEY_SPACE)){
 			sprite_idle.active = false;
 			sprite_run.active = false;
@@ -69,6 +67,8 @@ int main() {
 			sprite_idle.active = false;
 			sprite_run.active = true;
 			sprite_state = RIGHT;
+
+			sprite_run.position.x += sprite_run.velocity.x * dt;
 		}
 
 		// IDLE CONDITION
@@ -76,6 +76,8 @@ int main() {
 			sprite_idle.active = true;
 			sprite_run.active = false;
 			sprite_state = IDLE;
+			
+			sprite_idle.position.x = sprite_run.position.x;
 		}
 
 		// IDLE MOVEMENT
