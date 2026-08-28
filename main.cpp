@@ -32,22 +32,32 @@ int main() {
 
 	int frameCount = 0; // number of frames in spritesheet
 
+	int frameTimer = 0; // how fast computer runs each frame
+
 	// FPS
 	SetTargetFPS(FPS);
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
 		float dt = GetFrameTime();
-	
+
 		// IDLE RIGHT FRAME	
 		if (idle_right.direction == IDLE_RIGHT){
-			frameCount++; // iterate through frames
+			frameTimer++;
 
-			if (frameCount >= 28) {
-				frameCount = 0;
+			if (frameTimer >= 8){
+				frameTimer = 0;
+				frameCount++; // iterate through frames
+
+				if (frameCount >= 28) {
+					frameCount = 0;
+				}
+				
+
+			idle_right.frameRec.x = frameCount * idle_right.frameRec.width;
+			idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
 			}
 		}
-		
 
 
 		// DRAW
