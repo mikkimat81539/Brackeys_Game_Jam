@@ -23,17 +23,26 @@ int main() {
 	Texture2D player = LoadTexture("assets/idle.png");
 
 	Sprite sprite;
-	sprite.position = {SCREEN_CENTER};
+	sprite.position = {SCREEN_CENTER.x, 350};
 	sprite.frameRec = {0, 0, 128, 128};
 	
+	int frameCounter = 0;
+
 	// FPS
-	SetTargetFPS(FPS);
+	SetTargetFPS(FPS / 2);
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
+		// SPRITE MOVEMENT
+		frameCounter++;
 
+		if (frameCounter >= 28){
+			frameCounter = 0;
+		}
 
-
+		sprite.frameRec.x = (frameCounter % 4) * sprite.frameRec.width; // moves across the 4 columns.
+		sprite.frameRec.y = (frameCounter / 4) * sprite.frameRec.height; // moves down the 7 rows
+		
 
 		// DRAW
 		BeginDrawing();
