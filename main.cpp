@@ -37,6 +37,11 @@ int main() {
 	sprite_run.position = {sprite_idle.position};
 	sprite_run.frameRec = {0, 0, 128, 128};
 	sprite_run.velocity = {10, 10};
+	sprite_run.active = false;
+
+	int frameCounterRun = 0;	
+
+	int runTimer = 0;
 
 	// PLAYER STATE
 	STATE sprite_state;
@@ -46,31 +51,36 @@ int main() {
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
-		// SPRITE MOVEMENT
+		float dt = GetFrameTime();
 
-		print(sprite_state)
+		// SPRITE MOVEMENT
+		print(sprite_run.active)
 
 		// PROJECTILE CONDITION
 		if (IsKeyDown(KEY_SPACE)){
 			sprite_idle.active = false;
+			sprite_run.active = false;
 			sprite_state = SHOT;
 			print(sprite_state)
 		}
 
+		// RUN CONDITION
 		else if (IsKeyDown(KEY_RIGHT)) {
 			sprite_idle.active = false;
+			sprite_run.active = true;
 			sprite_state = RIGHT;
-			print(sprite_state)
 		}
 
 		// IDLE CONDITION
 		else if (GetKeyPressed() == 0){
 			sprite_idle.active = true;
+			sprite_run.active = false;
 			sprite_state = IDLE;
 		}
 
 		// IDLE MOVEMENT
 		if (sprite_state == IDLE){
+
 			frameCounter++;
 
 			if (frameCounter >= 28){
@@ -79,6 +89,26 @@ int main() {
 
 			sprite_idle.frameRec.x = (frameCounter % 4) * sprite_idle.frameRec.width; // moves across the 4 columns.
 			sprite_idle.frameRec.y = (frameCounter / 4) * sprite_idle.frameRec.height; // moves down the 7 rows
+
+		}
+
+		// RUN MOVEMENT
+		if (sprite_state == RIGHT){
+			runTimer++;
+
+			if (runTimer >= 1){
+				runTimer = 0;
+		
+				frameCounterRun++;
+
+				if (frameCounterRun >= 34){
+					frameCounterRun = 0;
+				}
+
+			}
+
+			sprite_run.frameRec.x = (frameCounterRun % 2) * sprite_run.frameRec.width;
+			sprite_run.frameRec.y = (frameCounterRun / 4) * sprite_run.frameRec.height;
 		}
 
 		// DRAW
@@ -91,7 +121,11 @@ int main() {
 		DrawTexture(back_fence, 0, 250, WHITE); // back fence
 
 		if (sprite_idle.active){
-			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // player
+			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // idle player
+		}
+
+		else if(sprite_run.active){
+			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE);
 		}
 
 		EndDrawing();
