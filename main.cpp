@@ -20,7 +20,7 @@ int main() {
 	Texture2D back_fence = LoadTexture("assets/back_fence.png");
 
 	// PLAYER IDLE SPRITE
-	Texture2D idle = LoadTexture("assets/idle.png");
+	Texture2D idle = LoadTexture("assets/idle.png"); // right idle facing sprite
 
 	Sprite sprite_idle;
 	sprite_idle.position = {200, 350};
@@ -28,6 +28,16 @@ int main() {
 	sprite_idle.active = true;
 
 	int frameCounter = 0;
+
+	// PLAYER LEFT IDLE SPRITE
+	Texture2D left_idle = LoadTexture("assets/left_idle.png"); // left idle facing sprite
+
+	Sprite sprite_idle_left;
+	sprite_idle_left.position = {200, 350};
+	sprite_idle_left.frameRec = {0, 0, 128, 128};
+	sprite_idle_left.active = false;
+
+	int frameCounterLeft = 0;
 
 	// PLAYER RUN SPRITE
 	Texture2D run = LoadTexture("assets/run.png");
@@ -64,24 +74,37 @@ int main() {
 		else if (IsKeyDown(KEY_RIGHT)) {
 			sprite_idle.active = false;
 			sprite_run.active = true;
+			sprite_idle_left.active = false;
 			sprite_state = RIGHT;
 
 			sprite_run.position.x += sprite_run.velocity.x * dt;
 	
-			//out of bounds
+			// out of bounds
 			if (sprite_run.position.x >= SCREEN_WIDTH - sprite_run.frameRec.width) {
 				sprite_run.position.x -= sprite_run.velocity.x * dt;
 			}
 		}
 
+
 		// IDLE CONDITION
-		else if (GetKeyPressed() == 0){
+		else if (IsKeyDown(KEY_UP)){
 			sprite_idle.active = true;
 			sprite_run.active = false;
+			sprite_idle_left.active = false;
 			sprite_state = IDLE;
 			
 			sprite_idle.position.x = sprite_run.position.x;
 		}
+
+		// LEFT IDLE
+		else if (IsKeyDown(KEY_LEFT)) {
+			sprite_idle.active = false;
+			sprite_idle_left.active = true;
+			sprite_run.active = false;
+			sprite_state = IDLE_LEFT;
+		}
+
+		print(sprite_idle_left.active)
 
 
 		// IDLE FRAME MOVEMENT
@@ -95,6 +118,20 @@ int main() {
 
 			sprite_idle.frameRec.x = (frameCounter % 4) * sprite_idle.frameRec.width; // moves across the 4 columns.
 			sprite_idle.frameRec.y = (frameCounter / 4) * sprite_idle.frameRec.height; // moves down the 7 rows
+
+		}
+
+		// LEFT IDLE FRAME MOVEMENT
+		if (sprite_state == IDLE_LEFT){
+
+			frameCounterLeft++;
+
+			if (frameCounterLeft >= 28){
+				frameCounterLeft = 0;
+			}
+
+			sprite_idle_left.frameRec.x = (frameCounterLeft % 4) * sprite_idle_left.frameRec.width; // moves across the 4 columns.
+			sprite_idle_left.frameRec.y = (frameCounterLeft / 4) * sprite_idle_left.frameRec.height; // moves down the 7 rows
 
 		}
 
@@ -126,12 +163,16 @@ int main() {
 		DrawTexture(front_fence, 0, 470, WHITE); // front fence
 		DrawTexture(back_fence, 0, 250, WHITE); // back fence
 
-		if (sprite_idle.active){
-			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // idle player
+		if(sprite_run.active){
+			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE);
 		}
 
-		else if(sprite_run.active){
-			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE);
+		if (sprite_idle.active){
+			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // right idle player
+		}
+
+		else if (sprite_idle_left.active){
+			DrawTextureRec(left_idle, sprite_idle_left.frameRec, sprite_idle_left.position, WHITE); // left idle player
 		}
 
 		EndDrawing();

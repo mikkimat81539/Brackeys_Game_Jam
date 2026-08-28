@@ -4,6 +4,7 @@
 enum STATE {
 	IDLE,
 	RIGHT,
+	IDLE_LEFT,
 	LEFT,
 	UP,
 	DOWN,
