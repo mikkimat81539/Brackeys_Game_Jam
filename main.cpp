@@ -23,16 +23,29 @@ int main() {
 	Texture2D back_fence = LoadTexture("assets/back_fence.png");
 
 	// PLAYER
+
+	// idle right
 	Texture2D idle_right_img = LoadTexture("assets/idle_right.png");
 
 	Player idle_right;
 	idle_right.position = {350, 350}; // position of sprite
 	idle_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
-	idle_right.direction = IDLE_RIGHT;
 
+
+	// idle left
+	Texture2D idle_left_img = LoadTexture("assets/idle_left.png");
+
+	Player idle_left;
+	idle_left.position = {350, 350}; // position of sprite
+	idle_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+
+
+	// frame rate data
 	int frameCount = 0; // number of frames in spritesheet
-
 	int frameTimer = 0; // how fast computer runs each frame
+
+	// player state
+	STATE player_state = IDLE_RIGHT;
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -41,8 +54,17 @@ int main() {
 	while(!WindowShouldClose()){
 		float dt = GetFrameTime();
 
-		// IDLE RIGHT FRAME	
-		if (idle_right.direction == IDLE_RIGHT){
+		// KEY INPUT
+		if (IsKeyDown(KEY_RIGHT)) {
+			player_state = IDLE_RIGHT;
+		}
+
+		if (IsKeyDown(KEY_LEFT)) {
+			player_state = IDLE_LEFT;
+		}
+
+		// IDLE RIGHT FRAMERATE
+		if (player_state == IDLE_RIGHT){
 			frameTimer++;
 
 			if (frameTimer >= 8){
@@ -53,9 +75,25 @@ int main() {
 					frameCount = 0;
 				}
 				
+				idle_right.frameRec.x = frameCount * idle_right.frameRec.width;
+				idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
+			}
 
-			idle_right.frameRec.x = frameCount * idle_right.frameRec.width;
-			idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
+		}
+
+		if (player_state == IDLE_LEFT){
+			frameTimer++;
+
+			if (frameTimer >= 8){
+				frameTimer = 0;
+				frameCount++; // iterate through frames
+
+				if (frameCount >= 28) {
+					frameCount = 0;
+				}
+				
+				idle_left.frameRec.x = frameCount * idle_left.frameRec.width;
+				idle_left.frameRec.y = frameCount * idle_left.frameRec.height;
 			}
 		}
 
@@ -64,8 +102,12 @@ int main() {
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		if (idle_right.direction == IDLE_RIGHT){
+		if (player_state == IDLE_RIGHT){
 			DrawTextureRec(idle_right_img, idle_right.frameRec, idle_right.position, WHITE);
+		}
+
+		if (player_state == IDLE_LEFT){
+			DrawTextureRec(idle_left_img, idle_left.frameRec, idle_left.position, WHITE);
 		}
 
 		DrawTexture(house, 0, 0, WHITE);

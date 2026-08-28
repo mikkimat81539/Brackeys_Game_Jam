@@ -14,8 +14,6 @@ struct Player {
 	Vector2 position; // position of the sprite
 	Rectangle frameRec; // put the sprite in a rect
 	Vector2 velocity;
-
-	STATE direction;
 };
 
 # endif
