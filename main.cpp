@@ -20,7 +20,7 @@ int main() {
 	Texture2D back_fence = LoadTexture("assets/back_fence.png");
 
 	// PLAYER
-	Texture2D player = LoadTexture("assets/idle.png");
+	Texture2D idle= LoadTexture("assets/idle.png");
 
 	Sprite sprite;
 	sprite.position = {SCREEN_CENTER.x, 350};
@@ -53,7 +53,7 @@ int main() {
 		DrawTexture(front_fence, 0, 470, WHITE); // front fence
 		DrawTexture(back_fence, 0, 250, WHITE); // back fence
 
-		DrawTextureRec(player, sprite.frameRec, sprite.position, WHITE); // player
+		DrawTextureRec(idle, sprite.frameRec, sprite.position, WHITE); // player
 
 		EndDrawing();
 	}
