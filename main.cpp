@@ -49,8 +49,21 @@ int main() {
 	sprite_run.active = false;
 
 	int frameCounterRun = 0;	
-
 	int runTimer = 0;
+
+
+	// PLAYER RUN LEFT SPRITE
+	Texture2D run_left = LoadTexture("assets/run_left.png");
+
+	Sprite sprite_run_left;
+	sprite_run_left.position = {sprite_idle_left.position};
+	sprite_run_left.frameRec = {0, 0, 128, 128};
+	sprite_run_left.velocity = {100, 100};
+	sprite_run_left.active = false;
+
+	int frameCounterRunLeft = 0;	
+
+	int runLeftTimer = 0;
 
 	// PLAYER STATE
 	STATE sprite_state;
@@ -62,19 +75,13 @@ int main() {
 	while(!WindowShouldClose()){
 		float dt = GetFrameTime();
 
-		// PROJECTILE CONDITION
-
-		if (IsKeyDown(KEY_SPACE)){
-			sprite_idle.active = false;
-			sprite_run.active = false;
-			sprite_state = SHOT;
-		}
-
-		// RUN CONDITION
-		else if (IsKeyDown(KEY_RIGHT)) {
+		// RUN CONDITION RIGHT
+		if (IsKeyDown(KEY_RIGHT)) {
 			sprite_idle.active = false;
 			sprite_run.active = true;
 			sprite_idle_left.active = false;
+			sprite_run_left.active = false;
+
 			sprite_state = RIGHT;
 
 			sprite_run.position.x += sprite_run.velocity.x * dt;
@@ -83,28 +90,55 @@ int main() {
 			if (sprite_run.position.x >= SCREEN_WIDTH - sprite_run.frameRec.width) {
 				sprite_run.position.x -= sprite_run.velocity.x * dt;
 			}
+
+			sprite_idle.position.x = sprite_run.position.x;
+		}
+
+		// RUN CONDITION LEFT
+		else if (IsKeyDown(KEY_LEFT)) {
+			sprite_idle.active = false;
+			sprite_run.active = false;
+			sprite_idle_left.active = false;
+			sprite_run_left.active = true;
+
+			sprite_state = LEFT;
+
+			sprite_run_left.position.x -= sprite_run_left.velocity.x * dt;
+
+			if (sprite_run_left.position.x <= 0 + 90) {
+				sprite_run_left.position.x += sprite_run_left.velocity.x * dt;
+			}
+
+			sprite_idle_left.position.x = sprite_run_left.position.x;
+
 		}
 
 
 		// IDLE CONDITION
-		else if (IsKeyDown(KEY_UP)){
-			sprite_idle.active = true;
-			sprite_run.active = false;
-			sprite_idle_left.active = false;
-			sprite_state = IDLE;
-			
-			sprite_idle.position.x = sprite_run.position.x;
-		}
+		else {
+			if (sprite_state == LEFT){
+				sprite_idle.active = false;
+				sprite_run.active = false;
+				sprite_idle_left.active = true;
+				sprite_run_left.active = false;
 
-		// LEFT IDLE
-		else if (IsKeyDown(KEY_LEFT)) {
-			sprite_idle.active = false;
-			sprite_idle_left.active = true;
-			sprite_run.active = false;
-			sprite_state = IDLE_LEFT;
-		}
+				sprite_state = IDLE_LEFT;
+				
+				sprite_idle_left.position.x = sprite_run_left.position.x;
 
-		print(sprite_idle_left.active)
+			}
+
+			else if (sprite_state == RIGHT){
+				sprite_idle.active = true;
+				sprite_idle_left.active = false;
+				sprite_run.active = false;
+				sprite_run_left.active = false;
+
+				sprite_state = IDLE;
+
+				sprite_idle.position.x = sprite_run.position.x;
+			}
+		}
 
 
 		// IDLE FRAME MOVEMENT
@@ -121,6 +155,7 @@ int main() {
 
 		}
 
+		
 		// LEFT IDLE FRAME MOVEMENT
 		if (sprite_state == IDLE_LEFT){
 
@@ -151,7 +186,26 @@ int main() {
 			}
 
 			sprite_run.frameRec.x = (frameCounterRun % 2) * sprite_run.frameRec.width;
-			sprite_run.frameRec.y = (frameCounterRun / 4) * sprite_run.frameRec.height;
+			sprite_run.frameRec.y = (frameCounterRun / 2) * sprite_run.frameRec.height;
+		}
+
+		// RUN LEFT MOVEMENT
+		if (sprite_state == LEFT){
+			runLeftTimer++;
+
+			if (runLeftTimer >= 1){
+				runLeftTimer = 0;
+		
+				frameCounterRunLeft++;
+
+				if (frameCounterRunLeft >= 34){
+					frameCounterRunLeft = 0;
+				}
+
+			}
+
+			sprite_run_left.frameRec.x = (frameCounterRunLeft % 2) * sprite_run_left.frameRec.width;
+			sprite_run_left.frameRec.y = (frameCounterRunLeft / 2) * sprite_run_left.frameRec.height;
 		}
 
 		// DRAW
@@ -164,10 +218,14 @@ int main() {
 		DrawTexture(back_fence, 0, 250, WHITE); // back fence
 
 		if(sprite_run.active){
-			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE);
+			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE); // run right sprite
 		}
 
-		if (sprite_idle.active){
+		else if(sprite_run_left.active){
+			DrawTextureRec(run_left, sprite_run_left.frameRec, sprite_run_left.position, WHITE); // run left sprite
+		}
+
+		else if (sprite_idle.active){
 			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // right idle player
 		}
 
