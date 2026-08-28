@@ -23,7 +23,7 @@ int main() {
 	Texture2D idle = LoadTexture("assets/idle.png");
 
 	Sprite sprite_idle;
-	sprite_idle.position = {SCREEN_CENTER.x, 350};
+	sprite_idle.position = {200, 350};
 	sprite_idle.frameRec = {0, 0, 128, 128};
 	sprite_idle.active = true;
 
@@ -58,7 +58,6 @@ int main() {
 			sprite_idle.active = false;
 			sprite_run.active = false;
 			sprite_state = SHOT;
-			print(sprite_state)
 		}
 
 		// RUN CONDITION

@@ -4,6 +4,9 @@
 enum STATE {
 	IDLE,
 	RIGHT,
+	LEFT,
+	UP,
+	DOWN,
 	SHOT
 };
 
