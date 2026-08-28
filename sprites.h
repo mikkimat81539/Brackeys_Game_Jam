@@ -2,9 +2,9 @@
 # define SPRITES
 
 enum STATE {
-	IDLE,
-	RIGHT,
+	IDLE, // this is idle right just do not feel like changing whole thing
 	IDLE_LEFT,
+	RIGHT,
 	LEFT,
 	UP,
 	DOWN,

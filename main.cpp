@@ -25,9 +25,9 @@ int main() {
 	Sprite sprite_idle;
 	sprite_idle.position = {200, 350};
 	sprite_idle.frameRec = {0, 0, 128, 128};
-	sprite_idle.active = true;
+	// sprite_idle.active = true;
 
-	int frameCounter = 0;
+	int frameCounter = 0; // iterates throgh each frame
 
 	// PLAYER LEFT IDLE SPRITE
 	Texture2D left_idle = LoadTexture("assets/left_idle.png"); // left idle facing sprite
@@ -35,7 +35,7 @@ int main() {
 	Sprite sprite_idle_left;
 	sprite_idle_left.position = {200, 350};
 	sprite_idle_left.frameRec = {0, 0, 128, 128};
-	sprite_idle_left.active = false;
+	// sprite_idle_left.active = false;
 
 	int frameCounterLeft = 0;
 
@@ -46,7 +46,7 @@ int main() {
 	sprite_run.position = {sprite_idle.position};
 	sprite_run.frameRec = {0, 0, 128, 128};
 	sprite_run.velocity = {100, 100};
-	sprite_run.active = false;
+	// sprite_run.active = false;
 
 	int frameCounterRun = 0;	
 	int runTimer = 0;
@@ -59,17 +59,17 @@ int main() {
 	sprite_run_left.position = {sprite_idle_left.position};
 	sprite_run_left.frameRec = {0, 0, 128, 128};
 	sprite_run_left.velocity = {100, 100};
-	sprite_run_left.active = false;
+	// sprite_run_left.active = false;
 
 	int frameCounterRunLeft = 0;	
 
 	int runLeftTimer = 0;
 
 	// PLAYER STATE
-	STATE sprite_state;
+	STATE sprite_state = IDLE;
 
 	// FPS
-	SetTargetFPS(FPS / 2);
+	SetTargetFPS(FPS/2);
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
@@ -77,12 +77,17 @@ int main() {
 
 		// RUN CONDITION RIGHT
 		if (IsKeyDown(KEY_RIGHT)) {
-			sprite_idle.active = false;
-			sprite_run.active = true;
-			sprite_idle_left.active = false;
-			sprite_run_left.active = false;
+//			sprite_idle.active = false;
+//			sprite_run.active = true;
+//			sprite_idle_left.active = false;
+//			sprite_run_left.active = false;
+
+//			if (sprite_state == RIGHT){
+//				sprite_run.position = sprite_run_left.position;
+//			}
 
 			sprite_state = RIGHT;
+
 
 			sprite_run.position.x += sprite_run.velocity.x * dt;
 	
@@ -96,12 +101,17 @@ int main() {
 
 		// RUN CONDITION LEFT
 		else if (IsKeyDown(KEY_LEFT)) {
-			sprite_idle.active = false;
-			sprite_run.active = false;
-			sprite_idle_left.active = false;
-			sprite_run_left.active = true;
+//			sprite_idle.active = false;
+//			sprite_run.active = false;
+//			sprite_idle_left.active = false;
+//			sprite_run_left.active = true;
+
+			if (sprite_state == RIGHT){
+				sprite_run_left.position = sprite_run.position;
+			}
 
 			sprite_state = LEFT;
+
 
 			sprite_run_left.position.x -= sprite_run_left.velocity.x * dt;
 
@@ -117,26 +127,27 @@ int main() {
 		// IDLE CONDITION
 		else {
 			if (sprite_state == LEFT){
-				sprite_idle.active = false;
-				sprite_run.active = false;
-				sprite_idle_left.active = true;
-				sprite_run_left.active = false;
+//				sprite_idle.active = false;
+//				sprite_run.active = false;
+//				sprite_idle_left.active = true;
+//				sprite_run_left.active = false;
 
 				sprite_state = IDLE_LEFT;
-				
+
 				sprite_idle_left.position.x = sprite_run_left.position.x;
 
 			}
 
 			else if (sprite_state == RIGHT){
-				sprite_idle.active = true;
-				sprite_idle_left.active = false;
-				sprite_run.active = false;
-				sprite_run_left.active = false;
+//				sprite_idle.active = true;
+//				sprite_idle_left.active = false;
+//				sprite_run.active = false;
+//				sprite_run_left.active = false;
 
 				sprite_state = IDLE;
-
+		
 				sprite_idle.position.x = sprite_run.position.x;
+
 			}
 		}
 
@@ -152,7 +163,6 @@ int main() {
 
 			sprite_idle.frameRec.x = (frameCounter % 4) * sprite_idle.frameRec.width; // moves across the 4 columns.
 			sprite_idle.frameRec.y = (frameCounter / 4) * sprite_idle.frameRec.height; // moves down the 7 rows
-
 		}
 
 		
@@ -217,19 +227,19 @@ int main() {
 		DrawTexture(front_fence, 0, 470, WHITE); // front fence
 		DrawTexture(back_fence, 0, 250, WHITE); // back fence
 
-		if(sprite_run.active){
+		if(sprite_state == RIGHT){
 			DrawTextureRec(run, sprite_run.frameRec, sprite_run.position, WHITE); // run right sprite
 		}
 
-		else if(sprite_run_left.active){
+		else if(sprite_state == LEFT){
 			DrawTextureRec(run_left, sprite_run_left.frameRec, sprite_run_left.position, WHITE); // run left sprite
 		}
 
-		else if (sprite_idle.active){
+		else if (sprite_state == IDLE){
 			DrawTextureRec(idle, sprite_idle.frameRec, sprite_idle.position, WHITE); // right idle player
 		}
 
-		else if (sprite_idle_left.active){
+		else if (sprite_state == IDLE_LEFT){
 			DrawTextureRec(left_idle, sprite_idle_left.frameRec, sprite_idle_left.position, WHITE); // left idle player
 		}
 
