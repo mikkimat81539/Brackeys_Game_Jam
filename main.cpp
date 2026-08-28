@@ -142,7 +142,6 @@ int main() {
 	
 		}
 
-
 		// DRAW
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
