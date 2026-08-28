@@ -36,6 +36,7 @@ int main() {
 		ClearBackground(RAYWHITE);
 
 		DrawTexture(house, 0, 0, WHITE);
+		DrawTexture(front_fence, 0, 470, WHITE);	
 
 		EndDrawing();
 	}
