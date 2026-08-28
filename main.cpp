@@ -30,6 +30,7 @@ int main() {
 	Player idle_right;
 	idle_right.position = {350, 350}; // position of sprite
 	idle_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	idle_right.velocity = {100, 100};
 
 
 	// idle left
@@ -38,6 +39,7 @@ int main() {
 	Player idle_left;
 	idle_left.position = {350, 350}; // position of sprite
 	idle_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	idle_left.velocity = {100, 100};
 
 
 	// frame rate data
@@ -63,8 +65,11 @@ int main() {
 			player_state = IDLE_LEFT;
 		}
 
-		// IDLE RIGHT FRAMERATE
+
+		// IDLE RIGHT
 		if (player_state == IDLE_RIGHT){
+
+			// FRAME RATE
 			frameTimer++;
 
 			if (frameTimer >= 8){
@@ -79,8 +84,28 @@ int main() {
 				idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
 			}
 
+			// MOVING UP AND DOWN RIGHT STATE
+			if (IsKeyDown(KEY_UP)){
+				idle_right.position.y -= idle_right.velocity.y * dt;
+			}
+
+			else if (IsKeyDown(KEY_DOWN)){
+				idle_right.position.y += idle_right.velocity.y * dt;
+			}
+
+			// BOUNDARIES
+			if (idle_right.position.y <= 270) {
+				idle_right.position.y = 270;
+
+			}
+
+			else if (idle_right.position.y >= 420) {
+				idle_right.position.y = 420;
+			}
+
 		}
 
+		// IDLE FRAME LEFT
 		if (player_state == IDLE_LEFT){
 			frameTimer++;
 
@@ -95,6 +120,26 @@ int main() {
 				idle_left.frameRec.x = frameCount * idle_left.frameRec.width;
 				idle_left.frameRec.y = frameCount * idle_left.frameRec.height;
 			}
+
+			// MOVING UP AND DOWN LEFT STATE
+			if (IsKeyDown(KEY_UP)){
+				idle_left.position.y -= idle_left.velocity.y * dt;
+			}
+
+			else if (IsKeyDown(KEY_DOWN)){
+				idle_left.position.y += idle_left.velocity.y * dt;
+
+			}
+		
+			// BOUNDARIES
+			if (idle_left.position.y <= 270) {
+				idle_left.position.y = 270;
+			}
+
+			else if (idle_left.position.y >= 420) {
+				idle_left.position.y = 420;
+			}
+	
 		}
 
 
