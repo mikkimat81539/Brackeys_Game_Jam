@@ -27,7 +27,6 @@ int main() {
 	sprite_idle.frameRec = {0, 0, 128, 128};
 	sprite_idle.active = true;
 
-	
 	int frameCounter = 0;
 
 	// PLAYER RUN SPRITE
@@ -69,6 +68,11 @@ int main() {
 			sprite_state = RIGHT;
 
 			sprite_run.position.x += sprite_run.velocity.x * dt;
+	
+			//out of bounds
+			if (sprite_run.position.x >= SCREEN_WIDTH - sprite_run.frameRec.width) {
+				sprite_run.position.x -= sprite_run.velocity.x * dt;
+			}
 		}
 
 		// IDLE CONDITION
@@ -80,7 +84,8 @@ int main() {
 			sprite_idle.position.x = sprite_run.position.x;
 		}
 
-		// IDLE MOVEMENT
+
+		// IDLE FRAME MOVEMENT
 		if (sprite_state == IDLE){
 
 			frameCounter++;
