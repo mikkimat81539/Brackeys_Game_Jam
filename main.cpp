@@ -113,10 +113,7 @@ int main() {
 	health3.position = {348, 130};
 	health3.frameRec = {0, 0, 64, 64}; // crop spritesheet 
 
-	
 	vector<Player> health = {health1, health2, health3}; 
-
-	// int counter = 0; // for debugging collision
 
 	// POINTS
 	int pointCounter = 0;
@@ -347,7 +344,7 @@ int main() {
 		spawnTimer += GetFrameTime();
 
 		// ADD OPPONENT TO VECTOR
-		if (spawnTimer >= 1.0f){
+		if (spawnTimer >= 3.0f){
 			opponent.position.x = SCREEN_WIDTH;
 
 			float min = 290.0;
@@ -434,22 +431,30 @@ int main() {
 
 		// COLLISION BETWEEN HOUSE AND OPPONENTS
 		for (int i = 0; i < spawn.size(); i++){
-			Rectangle opponentRect = {
-				spawn[i].position.x,
-				spawn[i].position.y,
-				spawn[i].frameRec.width,
-				spawn[i].frameRec.height
-			};
+			for (int j=0; j < health.size(); j++){
+				Rectangle opponentRect = {
+					spawn[i].position.x,
+					spawn[i].position.y,
+					spawn[i].frameRec.width,
+					spawn[i].frameRec.height
+				};
 
-			Rectangle houseRect = {
-				0.0,
-				0.0,
-				float(house.width),
-				float(house.height)
-			};
+				Rectangle houseRect = {
+					0.0,
+					0.0,
+					float(house.width),
+					float(house.height)
+				};
 
-			if (CheckCollisionRecs(opponentRect, houseRect)){
-				spawn.erase(spawn.begin() + i);
+				if (CheckCollisionRecs(opponentRect, houseRect)){
+					spawn.erase(spawn.begin() + i);
+					health.pop_back();
+				}
+
+				if (health.size() == 0){
+					exit(0);
+				}
+				
 			}
 		}
 
@@ -504,7 +509,7 @@ int main() {
 			DrawTextureRec(health_img, health[i].frameRec, health[i].position, WHITE);
 		}
 
-		DrawText("POINTS:", 546, 140, 20, BLACK);
+		DrawText("POINTS:", 546, 150, 20, BLACK);
 		// DrawText(pointCounter, 670, 100, 20, BLACK);
 
 		EndDrawing();
