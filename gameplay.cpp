@@ -125,7 +125,6 @@ void gameplay() {
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
-
 //		// MOUSE POSITION
 //		if (IsMouseButtonPressed(0)){
 //			cout << GetMousePosition().x << "," << GetMousePosition().y << endl;
@@ -477,7 +476,8 @@ void gameplay() {
 				}
 
 				if (health.size() == 0){
-					exit(0);
+					gameover();
+					CloseWindow();
 				}
 			}
 		}
@@ -515,6 +515,7 @@ void gameplay() {
 			DrawTextureRec(opponent_img, spawn[i].frameRec, spawn[i].position, WHITE);
 
 		}
+
 	
 		// PROPERTY
 		DrawTexture(house, 0, 0, WHITE);
