@@ -347,7 +347,7 @@ int main() {
 		spawnTimer += GetFrameTime();
 
 		// ADD OPPONENT TO VECTOR
-		if (spawnTimer >= 3.0f){
+		if (spawnTimer >= 1.0f){
 			opponent.position.x = SCREEN_WIDTH;
 
 			float min = 290.0;
@@ -428,7 +428,7 @@ int main() {
 			if (CheckCollisionRecs(playerRect, opponentRect)){
 				counter++;
 
-				// print(counter)
+				print(counter)
 			}
 		}
 
@@ -483,7 +483,7 @@ int main() {
 			DrawTextureRec(health_img, health[i].frameRec, health[i].position, WHITE);
 		}
 
-		DrawText("POINTS:", 650, 100, 20, BLACK);
+		DrawText("POINTS:", 546, 140, 20, BLACK);
 		// DrawText(pointCounter, 670, 100, 20, BLACK);
 
 		EndDrawing();
