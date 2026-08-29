@@ -95,7 +95,7 @@ int main() {
 		}
 
 
-		if (IsKeyDown(KEY_LEFT)) {
+		else if (IsKeyDown(KEY_LEFT)) {
 			player_state = RUN_LEFT;
 
 			// FRAME RATE
@@ -117,7 +117,11 @@ int main() {
 		
 		else {
 			// IDLE RIGHT
-			if (player_state == IDLE_RIGHT){
+			if (player_state == RUN_RIGHT){
+
+				idle_right.position = run_right.position;
+				player_state = IDLE_RIGHT;
+
 
 				// FRAME RATE
 				frameTimer++;
@@ -134,11 +138,15 @@ int main() {
 					idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
 				}
 
-				idle_right.position.x = run_right.position.x;
 			}
 
 			// IDLE FRAME LEFT
-			if (player_state == IDLE_LEFT){
+			if (player_state == RUN_LEFT){
+
+				idle_left.position = run_left.position;			
+				player_state = IDLE_LEFT;
+
+
 				frameTimer++;
 
 				if (frameTimer >= 8){
@@ -152,8 +160,6 @@ int main() {
 					idle_left.frameRec.x = frameCount * idle_left.frameRec.width;
 					idle_left.frameRec.y = frameCount * idle_left.frameRec.height;
 				}
-
-				idle_left.position.x = run_left.position.x;
 
 			}
 		}
@@ -177,10 +183,6 @@ int main() {
 			run_left.position.x -= run_left.velocity.x * dt;
 
 		}
-
-		// Keep left-facing sprite at the exact same position
-		idle_left.position = idle_right.position;
-
 
 
 		// BOUNDARIES
