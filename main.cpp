@@ -377,6 +377,19 @@ int main() {
 			spawn[i].frameRec.y = opponentframeCount * spawn[i].frameRec.height;
 		}
 
+		// COLLISION BETWEEN PROJECTILE AND OPPONENTS
+		for (int i=0; i < magazine.size(); i++){
+			for (int j = 0; j < spawn.size(); j++){
+				if (CheckCollisionCircleRec(magazine[i].position, magazine[i].radius, spawn[j].frameRec)){
+					print(true)
+					spawn.erase(spawn.begin() + j);
+					j--; // decrement j after erasing
+					continue; // Don't access spawn[j] after erasing
+				}
+			}
+			
+		}
+
 
 		// DRAW
 		BeginDrawing();
