@@ -29,7 +29,7 @@ int main() {
 	Texture2D idle_right_img = LoadTexture("assets/idle_right.png");
 
 	Player idle_right;
-	idle_right.position = {350, 350}; // position of sprite
+	idle_right.position = {110, 350}; // position of sprite
 	idle_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
 	idle_right.velocity = {100, 100};
 
@@ -38,7 +38,7 @@ int main() {
 	Texture2D idle_left_img = LoadTexture("assets/idle_left.png");
 
 	Player idle_left;
-	idle_left.position = {350, 350}; // position of sprite
+	idle_left.position = {110, 350}; // position of sprite
 	idle_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
 	idle_left.velocity = {100, 100};
 
@@ -288,7 +288,7 @@ int main() {
 			run_left.position.x = 100;
 		}
 
-		else if (run_right.position.x >= SCREEN_WIDTH - run_right.frameRec.width || run_left.position.x >= SCREEN_WIDTH - run_left.frameRec.width){
+		else if (run_right.position.x >= SCREEN_WIDTH - run_right.frameRec.width || run_left.position.x <= 100){
 			run_right.position.x = SCREEN_WIDTH - run_right.frameRec.width;
 			run_left.position.x = SCREEN_WIDTH - run_left.frameRec.width;
 		}
@@ -339,8 +339,8 @@ int main() {
 		if (spawnTimer >= 3.0f){
 			opponent.position.x = SCREEN_WIDTH;
 
-			float min = 290.0;
-			float max = 500.0;
+			float min = 280.0;
+			float max = 410.0;
 
 			random_device rd;
 			mt19937 gen(rd());
