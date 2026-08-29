@@ -92,6 +92,9 @@ int main() {
 
 	srand(time(0));
 	float spawnTimer = 0; // spawn timer
+	float difficultyTimer = 0.0; // difficulty timer
+
+	float spawn_rate = 3.0;
 
 	int opponentframeCount = 0;
 	int opponentTimer = 0; // this timer is for the frames
@@ -339,10 +342,24 @@ int main() {
 		}
 
 		// SPAWN OPPONENT TIME
-		spawnTimer += GetFrameTime();
+		spawnTimer += dt; // how fast opponents spawn
+		difficultyTimer += dt; // every nth seconds more opponents should spawn
+
+		if (difficultyTimer >= 10.0){
+			spawn_rate -= 0.3;
+			print(spawn_rate)
+			difficultyTimer = 0.0;
+			spawnTimer = 0.0f;
+		}
+
+		if (spawn_rate <= 0.3){
+			spawn_rate += 0.3;
+			print("true")
+		}
+
 
 		// ADD OPPONENT TO VECTOR
-		if (spawnTimer >= 3.0f){
+		if (spawnTimer >= spawn_rate){
 			opponent.position.x = SCREEN_WIDTH;
 
 			float min = 290.0;
