@@ -22,7 +22,7 @@ int main(){
 		if (IsKeyPressed(KEY_ENTER)){
 			insert_coin = false;
 			gameplay();
-			exit(0);
+			break;
 		}
 
 		BeginDrawing();

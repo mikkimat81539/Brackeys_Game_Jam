@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void gameover(){
+bool gameover(){
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
@@ -18,4 +18,6 @@ void gameover(){
 
 		EndDrawing();
 	}
+
+	return 1;
 }

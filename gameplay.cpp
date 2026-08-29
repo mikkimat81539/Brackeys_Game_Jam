@@ -475,9 +475,9 @@ void gameplay() {
 					health.pop_back();
 				}
 
-				if (health.size() == 0){
+				if (health.empty()){
 					gameover();
-					CloseWindow();
+					return;
 				}
 			}
 		}
@@ -543,5 +543,4 @@ void gameplay() {
 	
 	CloseWindow();
 
-	// return 0;
 }

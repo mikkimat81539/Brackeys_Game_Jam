@@ -2,6 +2,6 @@
 #define GAMEPLAY_H
 
 void gameplay();
-void gameover();
+bool gameover();
 
 #endif
