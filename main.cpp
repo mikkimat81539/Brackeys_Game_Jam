@@ -352,12 +352,10 @@ int main() {
 			spawnTimer = 0.0f;
 			
 			if (spawn_rate < 0.2){
-				spawn_rate = 0.8;
-				opponent.velocity.x += 50;
-				opponent.velocity.y += 50;
-
+				spawn_rate = 3;
+				opponent.velocity.x += 100;
+				opponent.velocity.y += 100;
 			}
-
 		}
 
 
@@ -473,7 +471,6 @@ int main() {
 				if (health.size() == 0){
 					exit(0);
 				}
-				
 			}
 		}
 
