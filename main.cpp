@@ -239,6 +239,8 @@ int main() {
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
+
+		// PLAYER
 		if (player_state == IDLE_RIGHT){
 			DrawTextureRec(idle_right_img, idle_right.frameRec, idle_right.position, WHITE);
 		}
@@ -255,10 +257,18 @@ int main() {
 			DrawTextureRec(run_left_img, run_left.frameRec, run_left.position, WHITE);
 		}
 
+		// PROPERTY
 		DrawTexture(house, 0, 0, WHITE);
 		DrawTexture(front_fence, 0, 470, WHITE);	
 		DrawTexture(back_fence, 0, 200, WHITE);	
 	
+
+		// TEXT
+		DrawText("GET OFF MY LAWN", 190, 10, 50, BLACK);
+		DrawText("use arrow keys to move around", 250, 70, 20, RED);
+		DrawText("use SPACE BAR to shoot", 290, 100, 20, RED);
+
+
 
 		EndDrawing();
 	}
