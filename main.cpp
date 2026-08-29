@@ -219,7 +219,7 @@ int main() {
 			run_left.position.y = idle_right.position.y;
 		}
 
-		else if (IsKeyDown(KEY_DOWN)){
+		if (IsKeyDown(KEY_DOWN)){
 			idle_right.position.y += idle_right.velocity.y * dt;
 
 			idle_left.position.y = idle_right.position.y;
@@ -228,7 +228,7 @@ int main() {
 		}
 
 
-		else if (IsKeyDown(KEY_RIGHT)){
+		if (IsKeyDown(KEY_RIGHT)){
 			run_right.position.x += run_right.velocity.x * dt;
 
 			idle_right.position = run_right.position;
@@ -237,7 +237,7 @@ int main() {
 
 		}
 
-		else if (IsKeyDown(KEY_LEFT)){
+		if (IsKeyDown(KEY_LEFT)){
 			run_left.position.x -= run_left.velocity.x * dt;
 
 
