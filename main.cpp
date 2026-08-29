@@ -12,10 +12,11 @@ int main(){
 	Color screen_color = {247, 239, 218, 255};
 	
 	bool insert_coin = true;
-
+	
+	// WALLPAPER
+	Texture2D wallpaper = LoadTexture("assets/wallpaper.png");
 	
 	// GAME LOOP
-
 	while(!WindowShouldClose()){
 		// IF SPACE BAR IS PRESSED START GAME PLAY
 		if (IsKeyPressed(KEY_ENTER)){
@@ -28,7 +29,8 @@ int main(){
 		ClearBackground(screen_color);
 
 		if (insert_coin){
-			DrawText("PRESS ENTER TO BEGIN", 80, SCREEN_CENTER.y, 50, RED);
+			DrawTexture(wallpaper, 0, 0, WHITE);
+			DrawText("PRESS ENTER TO BEGIN", 170, SCREEN_CENTER.y, 40, RED);
 		}
 
 		EndDrawing();
