@@ -380,8 +380,14 @@ int main() {
 		// COLLISION BETWEEN PROJECTILE AND OPPONENTS
 		for (int i=0; i < magazine.size(); i++){
 			for (int j = 0; j < spawn.size(); j++){
-				if (CheckCollisionCircleRec(magazine[i].position, magazine[i].radius, spawn[j].frameRec)){
-					print(true)
+				Rectangle opponentRect = {
+					spawn[j].position.x,
+					spawn[j].position.y,
+					spawn[j].frameRec.width,
+					spawn[j].frameRec.height
+				};
+	
+				if (CheckCollisionCircleRec(magazine[i].position, magazine[i].radius, opponentRect)){
 					spawn.erase(spawn.begin() + j);
 					j--; // decrement j after erasing
 					continue; // Don't access spawn[j] after erasing
