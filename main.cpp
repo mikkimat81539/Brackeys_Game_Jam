@@ -347,7 +347,7 @@ int main() {
 
 		if (difficultyTimer >= 10.0){
 			spawn_rate -= 0.2;
-			print(spawn_rate)
+			// print(spawn_rate)
 			difficultyTimer = 0.0;
 			spawnTimer = 0.0f;
 			
