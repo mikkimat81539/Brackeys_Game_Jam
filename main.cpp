@@ -70,6 +70,16 @@ int main() {
 	// player state
 	STATE player_state = IDLE_RIGHT;
 
+
+	// PROJECTILE	
+	Projectile projectile;
+	projectile.radius = 5;
+
+	projectile.active = false;
+
+	// Store Projectile in vector
+	vector<Projectile> magazine = {};
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -199,7 +209,7 @@ int main() {
 		}
 
 
-		if (IsKeyDown(KEY_RIGHT)){
+		else if (IsKeyDown(KEY_RIGHT)){
 			run_right.position.x += run_right.velocity.x * dt;
 
 			idle_right.position = run_right.position;
@@ -232,7 +242,7 @@ int main() {
 
 		}
 
-		if (run_right.position.x <= 100 || run_left.position.x <= 100){
+		else if (run_right.position.x <= 100 || run_left.position.x <= 100){
 			run_right.position.x = 100;
 			run_left.position.x = 100;
 		}
@@ -241,6 +251,46 @@ int main() {
 			run_right.position.x = SCREEN_WIDTH - run_right.frameRec.width;
 			run_left.position.x = SCREEN_WIDTH - run_left.frameRec.width;
 		}
+
+
+		// SHOOTING PROJECTILE KEY INPUT
+		if (IsKeyPressed(KEY_SPACE)){
+			if (player_state == IDLE_RIGHT || player_state == RUN_RIGHT){
+				projectile.position.x = idle_right.position.x + 130; // Reset back to original position
+				projectile.position.y = idle_right.position.y + 60;
+
+				projectile.velocity.x = 250;
+				projectile.active = true;
+
+				magazine.push_back(projectile);
+			}
+
+
+			else if (player_state == IDLE_LEFT || player_state == RUN_LEFT){
+				projectile.position.x = idle_left.position.x - 10; // Reset back to original position
+				projectile.position.y = idle_left.position.y + 60;
+
+				projectile.velocity.x = -250;
+				projectile.active = true;
+
+				magazine.push_back(projectile);
+			}
+
+		}
+
+		// Projectile Movement
+		for (int i = 0; i < magazine.size(); i++){
+			if (magazine[i].active) {
+				magazine[i].position.x += magazine[i].velocity.x * dt;
+
+			}
+
+			if (magazine[i].position.x > SCREEN_WIDTH || magazine[i].position.x < 0 || magazine[i].position.y > SCREEN_HEIGHT || magazine[i].position.y < 0){
+				magazine.erase(magazine.begin());
+				i--;
+			}
+		}
+
 
 		// DRAW
 		BeginDrawing();
@@ -262,6 +312,11 @@ int main() {
 
 		if (player_state == RUN_LEFT){
 			DrawTextureRec(run_left_img, run_left.frameRec, run_left.position, WHITE);
+		}
+
+		// PROJECTILE
+		for (int i=0; i < magazine.size(); i++){
+			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, BLUE);
 		}
 
 		// PROPERTY

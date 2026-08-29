@@ -16,4 +16,13 @@ struct Player {
 	Vector2 velocity;
 };
 
+
+struct Projectile {
+	Vector2 position;
+	float radius;
+	Vector2 velocity;
+	bool active;
+
+};
+
 # endif
