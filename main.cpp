@@ -80,6 +80,25 @@ int main() {
 	// Store Projectile in vector
 	vector<Projectile> magazine = {};
 
+	// HEALTH
+	Texture2D health_img = LoadTexture("assets/health.png");
+
+	Player health1;
+	health1.position = {220, 130};
+	health1.frameRec = {0, 0, 64, 64}; // crop spritesheet 
+
+	Player health2;
+	health2.position = {284, 130};
+	health2.frameRec = {0, 0, 64, 64}; // crop spritesheet 
+
+	Player health3;
+	health3.position = {348, 130};
+	health3.frameRec = {0, 0, 64, 64}; // crop spritesheet 
+
+	
+
+	vector<Player> health = {health1, health2, health3}; 
+
 	// FPS
 	SetTargetFPS(FPS);
 
@@ -329,8 +348,12 @@ int main() {
 		DrawText("GET OFF MY LAWN", 190, 10, 50, BLACK);
 		DrawText("use arrow keys to move around", 250, 70, 20, RED);
 		DrawText("use SPACE BAR to shoot", 290, 100, 20, RED);
+		DrawText("HEALTH:", 135, 150, 20, BLACK);
 
-
+		// HEALTH
+		for (int i=0; i < health.size(); i++){
+			DrawTextureRec(health_img, health[i].frameRec, health[i].position, WHITE);
+		}
 
 		EndDrawing();
 	}
