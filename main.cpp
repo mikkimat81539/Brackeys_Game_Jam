@@ -309,7 +309,7 @@ int main() {
 				projectile.position.x = idle_right.position.x + 130; // Reset back to original position
 				projectile.position.y = idle_right.position.y + 60;
 
-				projectile.velocity.x = 250;
+				projectile.velocity.x = 450;
 				projectile.active = true;
 
 				magazine.push_back(projectile);
@@ -320,7 +320,7 @@ int main() {
 				projectile.position.x = idle_left.position.x - 10; // Reset back to original position
 				projectile.position.y = idle_left.position.y + 60;
 
-				projectile.velocity.x = -250;
+				projectile.velocity.x = -450;
 				projectile.active = true;
 
 				magazine.push_back(projectile);
@@ -346,15 +346,18 @@ int main() {
 		difficultyTimer += dt; // every nth seconds more opponents should spawn
 
 		if (difficultyTimer >= 10.0){
-			spawn_rate -= 0.3;
+			spawn_rate -= 0.2;
 			print(spawn_rate)
 			difficultyTimer = 0.0;
 			spawnTimer = 0.0f;
-		}
+			
+			if (spawn_rate < 0.2){
+				spawn_rate = 0.8;
+				opponent.velocity.x += 50;
+				opponent.velocity.y += 50;
 
-		if (spawn_rate <= 0.3){
-			spawn_rate += 0.3;
-			print("true")
+			}
+
 		}
 
 
@@ -477,7 +480,7 @@ int main() {
 
 		// DRAW
 		BeginDrawing();
-		ClearBackground(RAYWHITE);
+		ClearBackground(Color {247, 239, 218, 255});
 
 
 		// PLAYER
