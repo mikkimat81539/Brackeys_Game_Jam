@@ -30,7 +30,7 @@ int main() {
 
 	Player idle_right;
 	idle_right.position = {110, 350}; // position of sprite
-	idle_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	idle_right.frameRec = {0, 0, 84, 92}; // crop spritesheet 
 	idle_right.velocity = {200, 200};
 
 
@@ -39,7 +39,7 @@ int main() {
 
 	Player idle_left;
 	idle_left.position = {110, 350}; // position of sprite
-	idle_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	idle_left.frameRec = {0, 0, 84, 92}; // crop spritesheet 
 	idle_left.velocity = {200, 200};
 
 	// run right
@@ -47,7 +47,7 @@ int main() {
 
 	Player run_right;
 	run_right.position = idle_right.position; // position of sprite
-	run_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	run_right.frameRec = {0, 0, 110, 110}; // crop spritesheet 
 	run_right.velocity = {200, 200};
 	
 
@@ -56,7 +56,7 @@ int main() {
 
 	Player run_left;
 	run_left.position = idle_left.position; // position of sprite
-	run_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
+	run_left.frameRec = {0, 0, 110, 110}; // crop spritesheet 
 	run_left.velocity = {200, 200};
 
 
@@ -282,9 +282,9 @@ int main() {
 
 		}
 
-		if (idle_right.position.y >= 420 || idle_left.position.y >= 420) {
-			idle_right.position.y = 420;
-			idle_left.position.y = 420;
+		if (idle_right.position.y >= 460 || idle_left.position.y >= 460) {
+			idle_right.position.y = 460;
+			idle_left.position.y = 460;
 
 		}
 
