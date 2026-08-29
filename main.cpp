@@ -1,7 +1,5 @@
 # include <iostream>
 # include <vector>
-# include <cstdlib>
-# include <ctime>
 # include <random>
 
 # include "raylib.h"
@@ -396,6 +394,7 @@ int main() {
 				};
 	
 				if (CheckCollisionCircleRec(magazine[i].position, magazine[i].radius, opponentRect)){
+					pointCounter += 10;
 					magazine.erase(magazine.begin() + i);
 					spawn.erase(spawn.begin() + j);
 					j--; // decrement j after erasing
@@ -509,8 +508,9 @@ int main() {
 			DrawTextureRec(health_img, health[i].frameRec, health[i].position, WHITE);
 		}
 
-		DrawText("POINTS:", 546, 150, 20, BLACK);
-		// DrawText(pointCounter, 670, 100, 20, BLACK);
+		// POINTS
+		DrawText("POINTS:", 545, 150, 20, BLACK);
+		DrawText(TextFormat("%d", pointCounter), 640, 150, 20, BLACK);
 
 		EndDrawing();
 	}
