@@ -86,7 +86,7 @@ int main() {
 
 	Opponent opponent;
 	opponent.position = {0, 0};
-	opponent.frameRec = {0, 0, 128, 128};
+	opponent.frameRec = {0, 0, 64, 64};
 	opponent.velocity = {70, 70};
 
 	// OPPONENT STORAGE
@@ -340,7 +340,7 @@ int main() {
 			opponent.position.x = SCREEN_WIDTH;
 
 			float min = 290.0;
-			float max = 525.0 - 128;
+			float max = 500.0;
 
 			random_device rd;
 			mt19937 gen(rd());
