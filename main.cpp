@@ -31,7 +31,7 @@ int main() {
 	Player idle_right;
 	idle_right.position = {110, 350}; // position of sprite
 	idle_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
-	idle_right.velocity = {100, 100};
+	idle_right.velocity = {200, 200};
 
 
 	// idle left
@@ -40,7 +40,7 @@ int main() {
 	Player idle_left;
 	idle_left.position = {110, 350}; // position of sprite
 	idle_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
-	idle_left.velocity = {100, 100};
+	idle_left.velocity = {200, 200};
 
 	// run right
 	Texture2D run_right_img = LoadTexture("assets/run_right.png");
@@ -48,7 +48,7 @@ int main() {
 	Player run_right;
 	run_right.position = idle_right.position; // position of sprite
 	run_right.frameRec = {0, 0, 128, 128}; // crop spritesheet 
-	run_right.velocity = {100, 100};
+	run_right.velocity = {200, 200};
 	
 
 	// run left
@@ -57,7 +57,7 @@ int main() {
 	Player run_left;
 	run_left.position = idle_left.position; // position of sprite
 	run_left.frameRec = {0, 0, 128, 128}; // crop spritesheet 
-	run_left.velocity = {100, 100};
+	run_left.velocity = {200, 200};
 
 
 	// frame rate data
@@ -388,9 +388,11 @@ int main() {
 				};
 	
 				if (CheckCollisionCircleRec(magazine[i].position, magazine[i].radius, opponentRect)){
+					magazine.erase(magazine.begin() + i);
 					spawn.erase(spawn.begin() + j);
 					j--; // decrement j after erasing
-					continue; // Don't access spawn[j] after erasing
+					// continue; // Don't access spawn[j] after erasing
+					break;
 				}
 			}
 			
@@ -427,6 +429,7 @@ int main() {
 		// OPPONENT
 		for (int i=0; i < spawn.size(); i++){	
 			DrawTextureRec(opponent_img, spawn[i].frameRec, spawn[i].position, WHITE);
+
 		}
 	
 		// PROPERTY
