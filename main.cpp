@@ -306,8 +306,8 @@ int main() {
 		// SHOOTING PROJECTILE KEY INPUT
 		if (IsKeyPressed(KEY_SPACE)){
 			if (player_state == IDLE_RIGHT || player_state == RUN_RIGHT){
-				projectile.position.x = idle_right.position.x + 130; // Reset back to original position
-				projectile.position.y = idle_right.position.y + 60;
+				projectile.position.x = idle_right.position.x + 110; // Reset back to original position
+				projectile.position.y = idle_right.position.y + 45;
 
 				projectile.velocity.x = 450;
 				projectile.active = true;
@@ -318,7 +318,7 @@ int main() {
 
 			else if (player_state == IDLE_LEFT || player_state == RUN_LEFT){
 				projectile.position.x = idle_left.position.x - 10; // Reset back to original position
-				projectile.position.y = idle_left.position.y + 60;
+				projectile.position.y = idle_left.position.y + 45;
 
 				projectile.velocity.x = -450;
 				projectile.active = true;
@@ -502,7 +502,7 @@ int main() {
 
 		// PROJECTILE
 		for (int i=0; i < magazine.size(); i++){
-			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, BLUE);
+			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, Color{77, 56, 0, 255});
 		}
 
 		// OPPONENT
