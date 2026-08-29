@@ -225,6 +225,16 @@ int main() {
 
 		}
 
+		if (run_right.position.x <= 100 || run_left.position.x <= 100){
+			run_right.position.x = 100;
+			run_left.position.x = 100;
+		}
+
+		else if (run_right.position.x >= SCREEN_WIDTH - run_right.frameRec.width || run_left.position.x >= SCREEN_WIDTH - run_left.frameRec.width){
+			run_right.position.x = SCREEN_WIDTH - run_right.frameRec.width;
+			run_left.position.x = SCREEN_WIDTH - run_left.frameRec.width;
+		}
+
 		// DRAW
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
