@@ -361,7 +361,7 @@ int main() {
 
 		// ADD OPPONENT TO VECTOR
 		if (spawnTimer >= spawn_rate){
-			opponent.position.x = SCREEN_WIDTH;
+			opponent.position.x = SCREEN_WIDTH - 10;
 
 			float min = 290.0;
 			float max = 410.0;
