@@ -2,6 +2,7 @@
 # include <vector>
 # include <cstdlib>
 # include <ctime>
+# include <random>
 
 # include "raylib.h"
 # include "constants.h"
@@ -80,6 +81,23 @@ int main() {
 	// Store Projectile in vector
 	vector<Projectile> magazine = {};
 
+	// OPPONENTS
+	Texture2D opponent_img = LoadTexture("assets/opps_left.png");
+
+	Opponent opponent;
+	opponent.position = {0, 0};
+	opponent.frameRec = {0, 0, 128, 128};
+	opponent.velocity = {70, 70};
+
+	// OPPONENT STORAGE
+	vector<Opponent> spawn = {};
+
+	srand(time(0));
+	float spawnTimer = 0; // spawn timer
+
+	int opponentframeCount = 0;
+	int opponentTimer = 0; // this timer is for the frames
+
 	// HEALTH
 	Texture2D health_img = LoadTexture("assets/health.png");
 
@@ -96,7 +114,6 @@ int main() {
 	health3.frameRec = {0, 0, 64, 64}; // crop spritesheet 
 
 	
-
 	vector<Player> health = {health1, health2, health3}; 
 
 	// FPS
@@ -104,6 +121,11 @@ int main() {
 
 	// GAME LOOP
 	while(!WindowShouldClose()){
+		// MOUSE POSITION
+		if (IsMouseButtonPressed(0)){
+			cout << GetMousePosition().x << "," << GetMousePosition().y << endl;
+		}
+
 		float dt = GetFrameTime();
 
 		// KEY INPUT
@@ -310,6 +332,51 @@ int main() {
 			}
 		}
 
+		// SPAWN OPPONENT TIME
+		spawnTimer += GetFrameTime();
+
+		// ADD OPPONENT TO VECTOR
+		if (spawnTimer >= 3.0f){
+			opponent.position.x = SCREEN_WIDTH;
+
+			float min = 290.0;
+			float max = 525.0 - 128;
+
+			random_device rd;
+			mt19937 gen(rd());
+			uniform_real_distribution<> randY(min, max);
+
+			opponent.position.y = randY(gen);
+
+			spawn.push_back(opponent);
+
+			spawnTimer = 0.0f;
+		}
+
+
+		// OPPONENT FRAME RATE
+		opponentTimer++;
+
+		if (opponentTimer >= 8){
+			opponentTimer = 0;
+			opponentframeCount++; // iterate through frames
+
+			if (opponentframeCount >= 15) {
+				opponentframeCount = 0;
+			}
+			
+			// opponent.frameRec.x = opponentframeCount * opponent.frameRec.width;
+			// opponent.frameRec.y = opponentframeCount * opponent.frameRec.height;
+		}
+
+		// UPDATE OPPONENT
+		for (int i=0; i < spawn.size(); i++){
+			spawn[i].position.x -= spawn[i].velocity.x * dt;
+	
+			spawn[i].frameRec.x = opponentframeCount * spawn[i].frameRec.width;
+			spawn[i].frameRec.y = opponentframeCount * spawn[i].frameRec.height;
+		}
+
 
 		// DRAW
 		BeginDrawing();
@@ -338,6 +405,11 @@ int main() {
 			DrawCircle(magazine[i].position.x, magazine[i].position.y, magazine[i].radius, BLUE);
 		}
 
+		// OPPONENT
+		for (int i=0; i < spawn.size(); i++){	
+			DrawTextureRec(opponent_img, spawn[i].frameRec, spawn[i].position, WHITE);
+		}
+	
 		// PROPERTY
 		DrawTexture(house, 0, 0, WHITE);
 		DrawTexture(front_fence, 0, 470, WHITE);	

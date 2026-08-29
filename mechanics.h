@@ -25,4 +25,12 @@ struct Projectile {
 
 };
 
+struct Opponent{
+	Vector2 position;
+	Rectangle frameRec;
+	Vector2 velocity;
+	bool active;
+
+};
+
 # endif
