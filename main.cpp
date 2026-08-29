@@ -60,8 +60,12 @@ int main() {
 
 
 	// frame rate data
-	int frameCount = 0; // number of frames in spritesheet
-	int frameTimer = 0; // how fast computer runs each frame
+	int idleframeCount = 0; // number of frames in spritesheet
+	int idleframeTimer = 0; // how fast computer runs each frame
+
+	int runframeCount = 0; // number of frames in spritesheet
+	int runframeTimer = 0; // how fast computer runs each frame
+
 
 	// player state
 	STATE player_state = IDLE_RIGHT;
@@ -83,18 +87,18 @@ int main() {
 			player_state = RUN_RIGHT;
 
 			// FRAME RATE
-			frameTimer++;
+			runframeTimer++;
 
-			if (frameTimer >= 6){
-				frameTimer = 0;
-				frameCount++; // iterate through frames
+			if (runframeTimer >= 6){
+				runframeTimer = 0;
+				runframeCount++; // iterate through frames
 
-				if (frameCount >= 34) {
-					frameCount = 0;
+				if (runframeCount >= 34) {
+					runframeCount = 0;
 				}
 				
-				run_right.frameRec.x = frameCount * run_right.frameRec.width;
-				run_right.frameRec.y = frameCount * run_right.frameRec.height;
+				run_right.frameRec.x = runframeCount * run_right.frameRec.width;
+				run_right.frameRec.y = runframeCount * run_right.frameRec.height;
 			}
 
 		}
@@ -109,18 +113,18 @@ int main() {
 			player_state = RUN_LEFT;
 
 			// FRAME RATE
-			frameTimer++;
+			runframeTimer++;
 
-			if (frameTimer >= 6){
-				frameTimer = 0;
-				frameCount++; // iterate through frames
+			if (runframeTimer >= 6){
+				runframeTimer = 0;
+				runframeCount++; // iterate through frames
 
-				if (frameCount >= 34) {
-					frameCount = 0;
+				if (runframeCount >= 34) {
+					runframeCount = 0;
 				}
 				
-				run_left.frameRec.x = frameCount * run_left.frameRec.width;
-				run_left.frameRec.y = frameCount * run_left.frameRec.height;
+				run_left.frameRec.x = runframeCount * run_left.frameRec.width;
+				run_left.frameRec.y = runframeCount * run_left.frameRec.height;
 			}
 		}
 
@@ -128,47 +132,50 @@ int main() {
 		else {
 			// IDLE RIGHT
 			if (player_state == RUN_RIGHT){
-
 				idle_right.position = run_right.position;
 				player_state = IDLE_RIGHT;
+			}
 
+			if (player_state == IDLE_RIGHT){
 
 				// FRAME RATE
-				frameTimer++;
+				idleframeTimer++;
 
-				if (frameTimer >= 8){
-					frameTimer = 0;
-					frameCount++; // iterate through frames
+				if (idleframeTimer >= 8){
+					idleframeTimer = 0;
+					idleframeCount++; // iterate through frames
 
-					if (frameCount >= 28) {
-						frameCount = 0;
+					if (idleframeCount >= 28) {
+						idleframeCount = 0;
 					}
 					
-					idle_right.frameRec.x = frameCount * idle_right.frameRec.width;
-					idle_right.frameRec.y = frameCount * idle_right.frameRec.height;
+					idle_right.frameRec.x = idleframeCount * idle_right.frameRec.width;
+					idle_right.frameRec.y = idleframeCount * idle_right.frameRec.height;
 				}
 
 			}
 
 			// IDLE FRAME LEFT
+
 			if (player_state == RUN_LEFT){
-
-				idle_left.position = run_left.position;			
+				idle_left.position = run_left.position;
 				player_state = IDLE_LEFT;
+			}
 
+			if (player_state == IDLE_LEFT){
 
-				frameTimer++;
+				idleframeTimer++;
 
-				if (frameTimer >= 8){
-					frameTimer = 0;
-					frameCount++; // iterate through frames
+				if (idleframeTimer >= 8){
+					idleframeTimer = 0;
+					idleframeCount++; // iterate through frames
 
-					if (frameCount >= 28) {
-						frameCount = 0;
+					if (idleframeCount >= 28) {
+						idleframeCount = 0;
 					}
 					
-					idle_left.frameRec.x = frameCount * idle_left.frameRec.width;
-					idle_left.frameRec.y = frameCount * idle_left.frameRec.height;
+					idle_left.frameRec.x = idleframeCount * idle_left.frameRec.width;
+					idle_left.frameRec.y = idleframeCount * idle_left.frameRec.height;
 				}
 
 			}
