@@ -87,7 +87,7 @@ int main() {
 	Opponent opponent;
 	opponent.position = {0, 0};
 	opponent.frameRec = {0, 0, 64, 64};
-	opponent.velocity = {70, 70};
+	opponent.velocity = {100, 100};
 
 	// OPPONENT STORAGE
 	vector<Opponent> spawn = {};
@@ -115,6 +115,11 @@ int main() {
 
 	
 	vector<Player> health = {health1, health2, health3}; 
+
+	int counter = 0;
+
+	// POINTS
+	int pointCounter = 0;
 
 	// FPS
 	SetTargetFPS(FPS);
@@ -277,20 +282,26 @@ int main() {
 
 		}
 
-		else if (idle_right.position.y >= 420 || idle_left.position.y >= 420) {
+		if (idle_right.position.y >= 420 || idle_left.position.y >= 420) {
 			idle_right.position.y = 420;
 			idle_left.position.y = 420;
 
 		}
 
-		else if (run_right.position.x <= 100 || run_left.position.x <= 100){
+		if (run_right.position.x <= 100 || run_left.position.x <= 100){
 			run_right.position.x = 100;
 			run_left.position.x = 100;
 		}
 
-		else if (run_right.position.x >= SCREEN_WIDTH - run_right.frameRec.width || run_left.position.x <= 100){
+		if (run_right.position.x >= SCREEN_WIDTH - run_right.frameRec.width){
 			run_right.position.x = SCREEN_WIDTH - run_right.frameRec.width;
 			run_left.position.x = SCREEN_WIDTH - run_left.frameRec.width;
+		}
+
+
+		if (run_left.position.x <= 100){
+			run_right.position.x = 100;
+			run_left.position.x = 100;
 		}
 
 
@@ -339,7 +350,7 @@ int main() {
 		if (spawnTimer >= 3.0f){
 			opponent.position.x = SCREEN_WIDTH;
 
-			float min = 280.0;
+			float min = 290.0;
 			float max = 410.0;
 
 			random_device rd;
@@ -398,6 +409,29 @@ int main() {
 			
 		}
 
+		// COLLISION BETWEEN PLAYER AND OPPONENTS
+		for (int i = 0; i < spawn.size(); i++){
+			Rectangle opponentRect = {
+				spawn[i].position.x,
+				spawn[i].position.y,
+				spawn[i].frameRec.width,
+				spawn[i].frameRec.height
+			};
+
+			Rectangle playerRect = {
+				idle_right.position.x,
+				idle_right.position.y,
+				idle_right.frameRec.width,
+				idle_right.frameRec.height
+			};
+
+			if (CheckCollisionRecs(playerRect, opponentRect)){
+				counter++;
+
+				// print(counter)
+			}
+		}
+
 
 		// DRAW
 		BeginDrawing();
@@ -448,6 +482,9 @@ int main() {
 		for (int i=0; i < health.size(); i++){
 			DrawTextureRec(health_img, health[i].frameRec, health[i].position, WHITE);
 		}
+
+		DrawText("POINTS:", 650, 100, 20, BLACK);
+		// DrawText(pointCounter, 670, 100, 20, BLACK);
 
 		EndDrawing();
 	}
