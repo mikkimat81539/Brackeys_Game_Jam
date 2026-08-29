@@ -75,6 +75,11 @@ int main() {
 
 		// KEY INPUT
 		if (IsKeyDown(KEY_RIGHT)) {
+
+			if (player_state != RUN_RIGHT) {
+				run_right.position = idle_right.position;
+			}
+
 			player_state = RUN_RIGHT;
 
 			// FRAME RATE
@@ -96,6 +101,11 @@ int main() {
 
 
 		else if (IsKeyDown(KEY_LEFT)) {
+
+			if (player_state != RUN_LEFT) {
+				run_left.position = idle_left.position;
+			}
+
 			player_state = RUN_LEFT;
 
 			// FRAME RATE
@@ -167,21 +177,37 @@ int main() {
 		// MOVING UP AND DOWN LEFT STATE
 		if (IsKeyDown(KEY_UP)){
 			idle_right.position.y -= idle_right.velocity.y * dt;
+
+			idle_left.position.y = idle_right.position.y; // make sure player stays in same position regardless of direction
+			run_right.position.y = idle_right.position.y;
+			run_left.position.y = idle_right.position.y;
 		}
 
 		else if (IsKeyDown(KEY_DOWN)){
 			idle_right.position.y += idle_right.velocity.y * dt;
+
+			idle_left.position.y = idle_right.position.y;
+			run_right.position.y = idle_right.position.y;
+			run_left.position.y = idle_right.position.y;
 		}
 
 
 		if (IsKeyDown(KEY_RIGHT)){
 			run_right.position.x += run_right.velocity.x * dt;
 
+			idle_right.position = run_right.position;
+			idle_left.position = run_right.position;
+			run_left.position = run_right.position;
+
 		}
 
 		else if (IsKeyDown(KEY_LEFT)){
 			run_left.position.x -= run_left.velocity.x * dt;
 
+
+			idle_left.position = run_left.position;
+			idle_right.position = run_left.position;
+			run_right.position = run_left.position;
 		}
 
 
