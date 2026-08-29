@@ -116,7 +116,7 @@ int main() {
 	
 	vector<Player> health = {health1, health2, health3}; 
 
-	int counter = 0;
+	// int counter = 0; // for debugging collision
 
 	// POINTS
 	int pointCounter = 0;
@@ -410,6 +410,29 @@ int main() {
 		}
 
 		// COLLISION BETWEEN PLAYER AND OPPONENTS
+//		for (int i = 0; i < spawn.size(); i++){
+//			Rectangle opponentRect = {
+//				spawn[i].position.x,
+//				spawn[i].position.y,
+//				spawn[i].frameRec.width,
+//				spawn[i].frameRec.height
+//			};
+//
+//			Rectangle playerRect = {
+//				idle_right.position.x,
+//				idle_right.position.y,
+//				idle_right.frameRec.width,
+//				idle_right.frameRec.height
+//			};
+//
+//			if (CheckCollisionRecs(playerRect, opponentRect)){
+//				counter++;
+//
+//				print(counter)
+//			}
+//		}
+
+		// COLLISION BETWEEN HOUSE AND OPPONENTS
 		for (int i = 0; i < spawn.size(); i++){
 			Rectangle opponentRect = {
 				spawn[i].position.x,
@@ -418,17 +441,15 @@ int main() {
 				spawn[i].frameRec.height
 			};
 
-			Rectangle playerRect = {
-				idle_right.position.x,
-				idle_right.position.y,
-				idle_right.frameRec.width,
-				idle_right.frameRec.height
+			Rectangle houseRect = {
+				0.0,
+				0.0,
+				float(house.width),
+				float(house.height)
 			};
 
-			if (CheckCollisionRecs(playerRect, opponentRect)){
-				counter++;
-
-				print(counter)
+			if (CheckCollisionRecs(opponentRect, houseRect)){
+				spawn.erase(spawn.begin() + i);
 			}
 		}
 
