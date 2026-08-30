@@ -1,11 +1,9 @@
 build main.cpp:
-	g++ -g  main.cpp gameplay.cpp gameover.cpp assets.cpp $$(pkg-config --libs --cflags raylib) -o main
+	g++ -g  main.cpp gameplay.cpp gameover.cpp assets.cpp $$(pkg-config --libs --cflags raylib) -o GetOffMyLawn
 
 package: build
-	zip GetOffMyLawn.zip main
+	zip GetOffMyLawn.zip GetOffMyLawn
 
-debug:
-	lldb main
 
 clean:
-	rm -f main
+	rm -f GetOffMyLawn
