@@ -6,26 +6,27 @@
 # include "raylib.h"
 # include "constants.h"
 # include "mechanics.h"
+# include "assets.h"
 
 using namespace std;
 
 # define print(x) cout << x << endl;
 
 void gameplay() {
-	// SCREEN
-	// InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Get Off My Lawn");
-	
+	// Load Assets	
+	LoadGameAssets();
+
 	// HOUSE
-	Texture2D house = LoadTexture("assets/house.png");
+	//Texture2D house = LoadTexture("assets/house.png");
 
 	// FENCE
-	Texture2D front_fence = LoadTexture("assets/front_fence.png");
-	Texture2D back_fence = LoadTexture("assets/back_fence.png");
+	//Texture2D front_fence = LoadTexture("assets/front_fence.png");
+	//Texture2D back_fence = LoadTexture("assets/back_fence.png");
 
 	// PLAYER
 
 	// idle right
-	Texture2D idle_right_img = LoadTexture("assets/idle_right.png");
+	// Texture2D idle_right_img = LoadTexture("assets/idle_right.png");
 
 	Player idle_right;
 	idle_right.position = {110, 350}; // position of sprite
@@ -34,7 +35,7 @@ void gameplay() {
 
 
 	// idle left
-	Texture2D idle_left_img = LoadTexture("assets/idle_left.png");
+	// Texture2D idle_left_img = LoadTexture("assets/idle_left.png");
 
 	Player idle_left;
 	idle_left.position = {110, 350}; // position of sprite
@@ -42,7 +43,7 @@ void gameplay() {
 	idle_left.velocity = {200, 200};
 
 	// run right
-	Texture2D run_right_img = LoadTexture("assets/run_right.png");
+	// Texture2D run_right_img = LoadTexture("assets/run_right.png");
 
 	Player run_right;
 	run_right.position = idle_right.position; // position of sprite
@@ -51,7 +52,7 @@ void gameplay() {
 	
 
 	// run left
-	Texture2D run_left_img = LoadTexture("assets/run_left.png");
+	// Texture2D run_left_img = LoadTexture("assets/run_left.png");
 
 	Player run_left;
 	run_left.position = idle_left.position; // position of sprite
@@ -81,7 +82,7 @@ void gameplay() {
 	vector<Projectile> magazine = {};
 
 	// OPPONENTS
-	Texture2D opponent_img = LoadTexture("assets/opps_left.png");
+	// Texture2D opponent_img = LoadTexture("assets/opps_left.png");
 
 	Opponent opponent;
 	opponent.position = {0, 0};
@@ -101,7 +102,7 @@ void gameplay() {
 	int opponentTimer = 0; // this timer is for the frames
 
 	// HEALTH
-	Texture2D health_img = LoadTexture("assets/health.png");
+	// Texture2D health_img = LoadTexture("assets/health.png");
 
 	Player health1;
 	health1.position = {220, 130};

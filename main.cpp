@@ -3,6 +3,7 @@
 # include "raylib.h"
 # include "constants.h"
 # include "gameplay.h"
+# include "assets.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ int main(){
 	bool insert_coin = true;
 	
 	// WALLPAPER
-	Texture2D wallpaper = LoadTexture("assets/wallpaper.png");
+	LoadGameAssets();	
 	
 	// GAME LOOP
 	while(!WindowShouldClose()){
@@ -35,6 +36,8 @@ int main(){
 
 		EndDrawing();
 	}
+
+	UnloadTexture(wallpaper);
 
 	CloseWindow();
 
