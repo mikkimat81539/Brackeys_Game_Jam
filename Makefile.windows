@@ -1,0 +1,18 @@
+CXX = g++
+
+TARGET = GetOffMyLawn.exe
+
+SRC = main.cpp gameplay.cpp gameover.cpp assets.cpp
+
+RAYLIB_PATH = C:/raylib/w64devkit
+
+CXXFLAGS = -g -I$(RAYLIB_PATH)/include
+
+LDFLAGS = -L$(RAYLIB_PATH)/lib
+LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
+
+build:
+	$(CXX) $(CXXFLAGS) $(SRC) $(LDFLAGS) $(LIBS) -o $(TARGET)
+
+clean:
+	rm -f $(TARGET)
