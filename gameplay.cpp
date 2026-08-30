@@ -456,30 +456,29 @@ void gameplay() {
 
 		// COLLISION BETWEEN HOUSE AND OPPONENTS
 		for (int i = 0; i < spawn.size(); i++){
-			for (int j=0; j < health.size(); j++){
-				Rectangle opponentRect = {
-					spawn[i].position.x,
-					spawn[i].position.y,
-					spawn[i].frameRec.width,
-					spawn[i].frameRec.height
-				};
+			Rectangle opponentRect = {
+				spawn[i].position.x,
+				spawn[i].position.y,
+				spawn[i].frameRec.width,
+				spawn[i].frameRec.height
+			};
 
-				Rectangle houseRect = {
-					0.0,
-					0.0,
-					float(house.width),
-					float(house.height)
-				};
+			Rectangle houseRect = {
+				0.0,
+				0.0,
+				float(house.width),
+				float(house.height)
+			};
 
-				if (CheckCollisionRecs(opponentRect, houseRect)){
-					spawn.erase(spawn.begin() + i);
-					health.pop_back();
-				}
+			if (CheckCollisionRecs(opponentRect, houseRect)){
+				spawn.erase(spawn.begin() + i);
+				i--;
+				health.pop_back();
+			}
 
-				if (health.empty()){
-					gameover();
-					return;
-				}
+			if (health.empty()){
+				gameover();
+				return;
 			}
 		}
 
